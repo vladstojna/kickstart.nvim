@@ -13,6 +13,7 @@ return {
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
+    'theHamsta/nvim-dap-virtual-text',
 
     -- Required dependency for nvim-dap-ui
     'nvim-neotest/nvim-nio',
@@ -23,6 +24,7 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -144,5 +146,9 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+    -- Install python specific config
+    require('dap-python').setup()
+    -- Setup additional adapter/configuration definitions
+    require('custom.dap')
   end,
 }

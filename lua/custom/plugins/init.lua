@@ -59,7 +59,7 @@ return {
     "windwp/nvim-spectre",
     keys = {
       {
-        "<leader>sr",
+        "<leader>sR",
         function() require("spectre").open() end,
         desc = "[R]eplace in files (Spectre)"
       },

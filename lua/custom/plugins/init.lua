@@ -18,6 +18,7 @@ return {
   "rhysd/git-messenger.vim",
   "lambdalisue/suda.vim",
   "stevearc/dressing.nvim",
+  "mfussenegger/nvim-ansible",
   {
     'rmagatti/auto-session',
     config = function()

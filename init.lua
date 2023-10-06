@@ -592,13 +592,6 @@ local servers = {
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
-  rust_analyzer = {
-    ["rust-analyzer"] = {
-      check = {
-        command = "clippy"
-      }
-    }
-  },
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -683,6 +676,25 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
+  },
+}
+
+-- Custom lsp setup for specific language servers that I don't want to use with
+-- Mason
+local lspconfig = require 'lspconfig'
+lspconfig.clangd.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+lspconfig.rust_analyzer.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    ["rust-analyzer"] = {
+      check = {
+        command = "clippy"
+      }
+    }
   },
 }
 

@@ -3,34 +3,34 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  "nvim-treesitter/playground",
-  "nvim-treesitter/nvim-treesitter-context",
-  "theprimeagen/harpoon",
-  "mbbill/undotree",
-  "RRethy/vim-illuminate",
-  "ahmedkhalf/project.nvim",
-  "famiu/bufdelete.nvim",
-  "tpope/vim-repeat",
-  "tpope/vim-unimpaired",
-  "tpope/vim-rsi",
-  "JoosepAlviste/nvim-ts-context-commentstring",
-  "sindrets/diffview.nvim",
-  "rhysd/git-messenger.vim",
-  "lambdalisue/suda.vim",
-  "stevearc/dressing.nvim",
-  "mfussenegger/nvim-ansible",
+  'nvim-treesitter/playground',
+  'nvim-treesitter/nvim-treesitter-context',
+  'theprimeagen/harpoon',
+  'mbbill/undotree',
+  'RRethy/vim-illuminate',
+  'ahmedkhalf/project.nvim',
+  'famiu/bufdelete.nvim',
+  'tpope/vim-repeat',
+  'tpope/vim-unimpaired',
+  'tpope/vim-rsi',
+  'JoosepAlviste/nvim-ts-context-commentstring',
+  'sindrets/diffview.nvim',
+  'rhysd/git-messenger.vim',
+  'lambdalisue/suda.vim',
+  'stevearc/dressing.nvim',
+  'pearofducks/ansible-vim',
   {
     'rmagatti/auto-session',
     config = function()
-      require("auto-session").setup {
-        log_level = "error",
+      require('auto-session').setup {
+        log_level = 'error',
       }
     end,
   },
   {
-    "windwp/nvim-ts-autotag",
+    'windwp/nvim-ts-autotag',
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
+      'nvim-treesitter/nvim-treesitter',
     },
     config = function()
       require('nvim-ts-autotag').setup()
@@ -44,65 +44,79 @@ return {
     },
   },
   {
-    "lukas-reineke/virt-column.nvim",
+    'lukas-reineke/virt-column.nvim',
     opts = {
-      char = "┊"
+      char = '┊',
     },
   },
   {
-    "dstein64/vim-startuptime",
-    cmd = "StartupTime",
+    'dstein64/vim-startuptime',
+    cmd = 'StartupTime',
     config = function()
       vim.g.startuptime_tries = 10
     end,
   },
   {
-    "windwp/nvim-spectre",
+    'windwp/nvim-spectre',
     keys = {
       {
-        "<leader>sR",
-        function() require("spectre").open() end,
-        desc = "[R]eplace in files (Spectre)"
+        '<leader>sR',
+        function()
+          require('spectre').open()
+        end,
+        desc = '[R]eplace in files (Spectre)',
       },
     },
   },
   {
-    "folke/trouble.nvim",
+    'folke/trouble.nvim',
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      'nvim-tree/nvim-web-devicons',
     },
     opts = {
       use_diagnostic_signs = true,
     },
   },
   {
-    "rcarriga/nvim-notify",
+    'rcarriga/nvim-notify',
     keys = {
       {
-        "<leader>dn",
+        '<leader>dn',
         function()
-          require("notify").dismiss({ silent = true, pending = true })
+          require('notify').dismiss { silent = true, pending = true }
         end,
-        desc = "[D]elete all [N]otifications",
+        desc = '[D]elete all [N]otifications',
       },
     },
     config = function()
-      require("notify").setup {
-        background_colour = "#000000",
+      require('notify').setup {
+        background_colour = '#000000',
       }
     end,
   },
   {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
+    'folke/todo-comments.nvim',
+    cmd = { 'TodoTrouble', 'TodoTelescope' },
     config = true,
     keys = {
-      { "]/",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-      { "[/",         function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-      { "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
-      { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
-      { "<leader>st", "<cmd>TodoTelescope<cr>",                            desc = "Todo" },
-      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",    desc = "Todo/Fix/Fixme" },
+      {
+        ']/',
+        function()
+          require('todo-comments').jump_next()
+        end,
+        desc = 'Next todo comment',
+      },
+      {
+        '[/',
+        function()
+          require('todo-comments').jump_prev()
+        end,
+        desc = 'Previous todo comment',
+      },
+      { '<leader>xt', '<cmd>TodoTrouble<cr>',                           desc = 'Todo (Trouble)' },
+      { '<leader>xT', '<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>',   desc = 'Todo/Fix/Fixme (Trouble)' },
+      { '<leader>st', '<cmd>TodoTelescope<cr>',                         desc = 'Todo' },
+      { '<leader>sT', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
     },
   },
   {
@@ -110,35 +124,35 @@ return {
     version = false,
     config = function()
       require('mini.pairs').setup()
-    end
+    end,
   },
   {
     'echasnovski/mini.trailspace',
     version = false,
     config = function()
       require('mini.trailspace').setup()
-    end
+    end,
   },
   {
     'echasnovski/mini.surround',
     version = false,
     opts = {
       mappings = {
-        add = "gsa",            -- Add surrounding in Normal and Visual modes
-        delete = "gsd",         -- Delete surrounding
-        find = "gsf",           -- Find surrounding (to the right)
-        find_left = "gsF",      -- Find surrounding (to the left)
-        highlight = "gsh",      -- Highlight surrounding
-        replace = "gsr",        -- Replace surrounding
-        update_n_lines = "gsn", -- Update `n_lines`
+        add = 'gsa',            -- Add surrounding in Normal and Visual modes
+        delete = 'gsd',         -- Delete surrounding
+        find = 'gsf',           -- Find surrounding (to the right)
+        find_left = 'gsF',      -- Find surrounding (to the left)
+        highlight = 'gsh',      -- Highlight surrounding
+        replace = 'gsr',        -- Replace surrounding
+        update_n_lines = 'gsn', -- Update `n_lines`
       },
     },
     config = function(_, opts)
       require('mini.surround').setup(opts)
-    end
+    end,
   },
   {
-    "rmagatti/goto-preview",
+    'rmagatti/goto-preview',
     config = function()
       require('goto-preview').setup {
         width = 100,             -- Width of the floating window
@@ -146,40 +160,40 @@ return {
         default_mappings = true, -- Bind default mappings
         debug = false,           -- Print debug information
         opacity = nil,           -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        post_open_hook = nil     -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        post_open_hook = nil,    -- A function taking two arguments, a buffer and a window to be ran as a hook.
       }
-    end
-  },
-  {
-    "simrat39/symbols-outline.nvim",
-    config = function()
-      require('symbols-outline').setup()
-    end
-  },
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "BufRead",
-    config = function()
-      require("lsp_signature").on_attach()
     end,
   },
   {
-    "ellisonleao/glow.nvim",
+    'simrat39/symbols-outline.nvim',
+    config = function()
+      require('symbols-outline').setup()
+    end,
+  },
+  {
+    'ray-x/lsp_signature.nvim',
+    event = 'BufRead',
+    config = function()
+      require('lsp_signature').on_attach()
+    end,
+  },
+  {
+    'ellisonleao/glow.nvim',
     config = true,
-    cmd = "Glow",
+    cmd = 'Glow',
     ft = {
-      "markdown"
+      'markdown',
     },
   },
   {
-    "iamcco/markdown-preview.nvim",
-    build = "cd app && npm install",
+    'iamcco/markdown-preview.nvim',
+    build = 'cd app && npm install',
     ft = {
-      "markdown"
+      'markdown',
     },
     config = function()
       vim.g.mkdp_auto_start = 0
-      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_filetypes = { 'markdown' }
     end,
   },
 }

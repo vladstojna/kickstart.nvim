@@ -1,28 +1,38 @@
-local telescope_builtin = require('telescope.builtin')
+local telescope_builtin = require 'telescope.builtin'
+local actions = require 'telescope.actions'
+local telescope = require 'telescope'
 
-vim.keymap.set('n', '<leader>sa',
-    function()
-        telescope_builtin.find_files({
-            hidden = true,
-            no_ignore = false,
-        })
-    end,
-    { desc = '[S]earch [A]ll Files (+ hidden)' }
-)
+telescope.setup {
+    pickers = {
+        buffers = {
+            sort_last_used = true,
+            previewer = false,
+            theme = 'dropdown',
+            mappings = {
+                i = {
+                    ['<c-d>'] = actions.delete_buffer,
+                },
+                n = {
+                    ['dd'] = actions.delete_buffer,
+                },
+            },
+        },
+    },
+}
 
-vim.keymap.set('n', '<leader>sA',
-    function()
-        telescope_builtin.find_files({
-            hidden = true,
-            no_ignore = true,
-        })
-    end,
-    { desc = '[S]earch [A]ll Files (+ hidden & ignored)' }
-)
+vim.keymap.set('n', '<leader>sa', function()
+    telescope_builtin.find_files {
+        hidden = true,
+        no_ignore = false,
+    }
+end, { desc = '[S]earch [A]ll Files (+ hidden)' })
 
-vim.keymap.set('n', '<leader>sk', telescope_builtin.keymaps,
-    { desc = '[S]earch [K]eymaps' }
-)
-vim.keymap.set('n', '<leader><Tab>', require('telescope.builtin').buffers,
-    { desc = '[Tab] Find existing buffers' }
-)
+vim.keymap.set('n', '<leader>sA', function()
+    telescope_builtin.find_files {
+        hidden = true,
+        no_ignore = true,
+    }
+end, { desc = '[S]earch [A]ll Files (+ hidden & ignored)' })
+
+vim.keymap.set('n', '<leader>sk', telescope_builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader><Tab>', telescope_builtin.buffers, { desc = '[Tab] Find existing buffers' })

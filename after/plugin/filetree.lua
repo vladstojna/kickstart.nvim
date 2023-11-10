@@ -1,8 +1,2 @@
-vim.keymap.set('n', '<leader>ef',
-    ':Neotree source=filesystem reveal=true toggle<cr>',
-    { desc = '[E]xplore [F]iles (tree)' }
-)
-vim.keymap.set('n', '<leader>eb',
-    ':Neotree source=buffers reveal=true toggle<cr>',
-    { desc = '[E]xplore [B]uffers (tree)' }
-)
+vim.keymap.set('n', '-', '<cmd>Oil<cr>', { desc = 'Explore parent directory of current buffer', silent = true })
+vim.keymap.set('n', '<leader>E', '<cmd>Oil .<cr>', { desc = '[E]xplore root directory', silent = true })

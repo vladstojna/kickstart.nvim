@@ -196,4 +196,14 @@ return {
       vim.g.mkdp_filetypes = { 'markdown' }
     end,
   },
+  {
+    'j-hui/fidget.nvim',
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+        },
+      },
+    },
+  },
 }

@@ -79,18 +79,11 @@ return {
   },
   {
     'rcarriga/nvim-notify',
-    keys = {
-      {
-        '<leader>dn',
-        function()
-          require('notify').dismiss { silent = true, pending = true }
-        end,
-        desc = '[D]elete all [N]otifications',
-      },
-    },
     config = function()
-      require('notify').setup {
+      vim.notify = require 'notify'
+      vim.notify.setup {
         background_colour = '#000000',
+        stages = 'static',
       }
     end,
   },

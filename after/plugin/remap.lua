@@ -22,7 +22,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
 vim.keymap.set('i', '<C-c>', '<Esc>')
 
-vim.keymap.set('n', '<leader>f', vim.cmd.Format)
+vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, { desc = 'Format buffer with LSP' })
 
 vim.keymap.set('n', '<leader>ru', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
     { desc = '[R]eplace word [U]nder cursor' })

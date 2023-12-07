@@ -190,6 +190,18 @@ return {
     end,
   },
   {
+    'danymat/neogen',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    config = function()
+      local ng = require 'neogen'
+      ng.setup {}
+
+      vim.keymap.set('n', '<leader>ng', function()
+        ng.generate { type = 'any' }
+      end, { noremap = true, silent = true, desc = '[N]eogen [G]enerate' })
+    end,
+  },
+  {
     'j-hui/fidget.nvim',
     opts = {
       notification = {

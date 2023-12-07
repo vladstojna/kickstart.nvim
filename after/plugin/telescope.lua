@@ -8,6 +8,7 @@ telescope.setup {
             sort_last_used = true,
             previewer = false,
             theme = 'dropdown',
+            layout_config = { width = 0.4 },
             mappings = {
                 i = {
                     ['<c-d>'] = actions.delete_buffer,

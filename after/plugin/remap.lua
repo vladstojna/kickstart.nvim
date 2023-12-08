@@ -10,7 +10,7 @@ vim.keymap.set('n', '}', '}zz')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
-vim.keymap.set('n', '<Home>', '_')
+vim.keymap.set('n', '<Home>', '^')
 vim.keymap.set('n', '<End>', '$')
 
 vim.keymap.set('x', '<leader>p', [["_dP]])

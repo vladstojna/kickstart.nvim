@@ -171,25 +171,6 @@ return {
     end,
   },
   {
-    'ellisonleao/glow.nvim',
-    config = true,
-    cmd = 'Glow',
-    ft = {
-      'markdown',
-    },
-  },
-  {
-    'iamcco/markdown-preview.nvim',
-    build = 'cd app && npm install',
-    ft = {
-      'markdown',
-    },
-    config = function()
-      vim.g.mkdp_auto_start = 0
-      vim.g.mkdp_filetypes = { 'markdown' }
-    end,
-  },
-  {
     'danymat/neogen',
     dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
@@ -213,5 +194,96 @@ return {
         },
       },
     },
+  },
+  {
+    'folke/zen-mode.nvim',
+    version = '*',
+    config = function()
+      require('zen-mode').setup {
+        window = {
+          backdrop = 0.8,
+        },
+        plugins = {
+          gitsigns = { enabled = false },
+        },
+      }
+    end,
+  },
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    opts = {
+      indent = {
+        char = ' ',
+      },
+    },
+  },
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+  },
+  {
+    'goolord/alpha-nvim',
+    version = '*',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    },
+    config = function()
+      local dashboard = require 'alpha.themes.dashboard'
+      dashboard.section.buttons.val = {
+        dashboard.button('f', ' ' .. ' Find file', ':Telescope find_files <CR>'),
+        dashboard.button('n', ' ' .. ' New file', ':ene <BAR> startinsert <CR>'),
+        dashboard.button('r', ' ' .. ' Recent files', ':Telescope oldfiles <CR>'),
+        dashboard.button('g', ' ' .. ' Find text', ':Telescope live_grep <CR>'),
+        dashboard.button('c', ' ' .. ' Config', ':e $MYVIMRC <CR>'),
+        dashboard.button('q', ' ' .. ' Quit', ':qa<CR>'),
+      }
+      require('alpha').setup(dashboard.opts)
+    end,
+  },
+  {
+    'laytan/cloak.nvim',
+    version = '*',
+    config = function()
+      require('cloak').setup {
+        enabled = true,
+        cloak_character = '*',
+        -- The applied highlight group (colors) on the cloaking, see `:h highlight`.
+        highlight_group = 'Comment',
+        -- Applies the length of the replacement characters for all matched
+        -- patterns, defaults to the length of the matched pattern.
+        cloak_length = nil, -- Provide a number if you want to hide the true length of the value.
+        patterns = {
+          {
+            -- Match any file starting with '.env'.
+            -- This can be a table to match multiple file patterns.
+            file_pattern = '.env*',
+            -- Match an equals sign and any character after it.
+            -- This can also be a table of patterns to cloak,
+            -- example: cloak_pattern = { ':.+', '-.+' } for yaml files.
+            cloak_pattern = '=.+',
+          },
+        },
+      }
+    end,
+  },
+  {
+    'lervag/vimtex',
+    config = function()
+      local function get_editor(sys)
+        local editor
+        if sys == 'Darwin' then
+          editor = 'skim'
+        elseif sys == 'Linux' then
+          editor = 'zathura'
+        else -- windows?
+          editor = 'zathura'
+        end
+        return editor
+      end
+
+      vim.g.vimtex_view_method = get_editor(vim.loop.os_uname().sysname)
+    end,
   },
 }

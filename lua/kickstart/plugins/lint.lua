@@ -9,6 +9,9 @@ return {
         markdown = { 'markdownlint' },
       }
 
+      local custom_linters = require 'custom.lint'
+      lint.linters_by_ft = vim.tbl_deep_extend('force', lint.linters_by_ft, custom_linters)
+
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:
       -- lint.linters_by_ft = lint.linters_by_ft or {}

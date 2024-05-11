@@ -3,8 +3,7 @@ vim.keymap.set('n', '<leader>bd', '<cmd>Bdelete<CR>')
 vim.keymap.set('n', '<leader>bD', '<cmd>Bdelete!<CR>')
 
 -- oil
-vim.keymap.set('n', '<leader>-', '<cmd>Oil<cr>',
-    { noremap = true, desc = 'Explore parent directory of current buffer', silent = true })
+vim.keymap.set('n', '<leader>-', '<cmd>Oil<cr>', { noremap = true, desc = 'Explore parent directory of current buffer', silent = true })
 vim.keymap.set('n', '<leader>E', '<cmd>Oil .<cr>', { noremap = true, desc = '[E]xplore root directory', silent = true })
 
 -- harpoon
@@ -19,8 +18,8 @@ require('luasnip.loaders.from_vscode').lazy_load()
 
 -- auto-session
 vim.keymap.set('n', '<leader>ss', require('auto-session.session-lens').search_session, {
-    noremap = true,
-    desc = '[S]earch [S]essions',
+  noremap = true,
+  desc = '[S]earch [S]essions',
 })
 
 -- trouble
@@ -31,15 +30,15 @@ vim.keymap.set('n', '<leader>xq', '<cmd>TroubleToggle quickfix<cr>', { silent = 
 vim.keymap.set('n', '<leader>xR', '<cmd>TroubleToggle lsp_references<cr>', { silent = true, noremap = true })
 
 local signs = {
-    Error = ' ',
-    Warn = ' ',
-    Hint = ' ',
-    Info = ' ',
+  Error = ' ',
+  Warn = ' ',
+  Hint = ' ',
+  Info = ' ',
 }
 
 for type, icon in pairs(signs) do
-    local hl = 'DiagnosticSign' .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  local hl = 'DiagnosticSign' .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
 -- undotree
@@ -48,42 +47,49 @@ vim.keymap.set('n', '<leader>uu', vim.cmd.UndotreeToggle, { desc = 'Toggle Undot
 -- zenmode
 vim.keymap.set('n', '<leader>z', vim.cmd.ZenMode, { desc = 'Toggle [Z]en Mode' })
 
+-- todo-comments
+vim.keymap.set('n', '<leader>xt', vim.cmd.TodoTrouble, { desc = 'Todo (Trouble)' })
+
+-- mini
+require('mini.trailspace').setup()
+require('mini.pairs').setup()
+
 -- telescope
 local telescope_builtin = require 'telescope.builtin'
 local actions = require 'telescope.actions'
 local telescope = require 'telescope'
 
 telescope.setup {
-    pickers = {
-        buffers = {
-            sort_last_used = true,
-            previewer = false,
-            theme = 'dropdown',
-            layout_config = { width = 0.4 },
-            mappings = {
-                i = {
-                    ['<c-d>'] = actions.delete_buffer,
-                },
-                n = {
-                    ['dd'] = actions.delete_buffer,
-                },
-            },
+  pickers = {
+    buffers = {
+      sort_last_used = true,
+      previewer = false,
+      theme = 'dropdown',
+      layout_config = { width = 0.4 },
+      mappings = {
+        i = {
+          ['<c-d>'] = actions.delete_buffer,
         },
+        n = {
+          ['dd'] = actions.delete_buffer,
+        },
+      },
     },
+  },
 }
 
 vim.keymap.set('n', '<leader>sa', function()
-    telescope_builtin.find_files {
-        hidden = true,
-        no_ignore = false,
-    }
+  telescope_builtin.find_files {
+    hidden = true,
+    no_ignore = false,
+  }
 end, { desc = '[S]earch [A]ll Files (+ hidden)' })
 
 vim.keymap.set('n', '<leader>sA', function()
-    telescope_builtin.find_files {
-        hidden = true,
-        no_ignore = true,
-    }
+  telescope_builtin.find_files {
+    hidden = true,
+    no_ignore = true,
+  }
 end, { desc = '[S]earch [A]ll Files (+ hidden & ignored)' })
 
 vim.keymap.set('n', '<leader>sk', telescope_builtin.keymaps, { desc = '[S]earch [K]eymaps' })

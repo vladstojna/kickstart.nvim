@@ -1,5 +1,3 @@
--- Custom options
-
 vim.opt.shell = os.getenv 'SHELL' or 'sh'
 
 vim.opt.relativenumber = true

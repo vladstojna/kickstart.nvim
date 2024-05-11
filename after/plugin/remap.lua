@@ -29,9 +29,5 @@ vim.keymap.set('n', '<leader>w', vim.cmd.w, { silent = true, noremap = true, des
 vim.keymap.set('n', '<leader>q', vim.cmd.q, { silent = true, noremap = true, desc = 'Quit' })
 vim.keymap.set('n', '<leader>qq', vim.cmd.qa, { silent = true, noremap = true, desc = 'Quit all' })
 
-vim.keymap.set('n', '<leader>+', function()
-  vim.o.hlsearch = not vim.o.hlsearch
-end, { desc = 'Toggle highlight during search' })
-
 vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })

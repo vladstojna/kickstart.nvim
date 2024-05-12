@@ -99,3 +99,17 @@ end, { desc = '[S]earch [A]ll Files (+ hidden & ignored)' })
 
 vim.keymap.set('n', '<leader>sk', telescope_builtin.keymaps, { desc = '[S]earch [K]eymaps' })
 vim.keymap.set('n', '<leader><Tab>', telescope_builtin.buffers, { desc = '[Tab] Find existing buffers' })
+
+-- refactoring
+local refactoring = require 'refactoring'
+telescope.load_extension 'refactoring'
+
+vim.keymap.set({ 'n', 'x' }, '<leader>rr', function()
+  telescope.extensions.refactoring.refactors()
+end, { desc = '[R]efactoring Seach [R]efactor' })
+vim.keymap.set({ 'x', 'n' }, '<leader>rv', function()
+  refactoring.debug.print_var()
+end, { desc = '[R]efactoring Print [V]ar' })
+vim.keymap.set('n', '<leader>rc', function()
+  refactoring.debug.cleanup {}
+end, { desc = '[R]efactoring [C]leanup' })

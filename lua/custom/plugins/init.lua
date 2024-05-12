@@ -229,4 +229,14 @@ return {
       vim.g.vimtex_view_method = get_editor(vim.loop.os_uname().sysname)
     end,
   },
+  {
+    'ThePrimeagen/refactoring.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require('refactoring').setup()
+    end,
+  },
 }

@@ -227,6 +227,7 @@ return {
       end
 
       vim.g.vimtex_view_method = get_editor(vim.loop.os_uname().sysname)
+      vim.g.vimtex_quickfix_mode = 0
     end,
   },
   {

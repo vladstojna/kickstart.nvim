@@ -149,6 +149,14 @@ return {
         plugins = {
           gitsigns = { enabled = false },
         },
+        on_open = function(_)
+          -- set cmdheight to 1 when entering zen-mode, as it hides the
+          -- statusline, thus, no search count
+          vim.o.cmdheight = 1
+        end,
+        on_close = function()
+          vim.o.cmdheight = 0
+        end,
       }
     end,
   },

@@ -28,6 +28,7 @@
   "mini.nvim": { "branch": "main", "commit": "2d0f10540efdbb1f5c480ebe19ce4de451936a5d" },
   "neodev.nvim": { "branch": "main", "commit": "ce9a2e8eaba5649b553529c5498acb43a6c317cd" },
   "neogen": { "branch": "main", "commit": "0daffcec249bf42275e322361fe55b89a05ff278" },
+  "no-neck-pain.nvim": { "branch": "main", "commit": "58f37113d5274a9919e9b547fac7cd74525568ff" },
   "nvim-cmp": { "branch": "main", "commit": "cd2cf0c124d3de577fb5449746568ee8e601afc8" },
   "nvim-dap": { "branch": "master", "commit": "615a1b2046e1eaf7995e0ba8e8a65f344201349d" },
   "nvim-dap-go": { "branch": "main", "commit": "5faf165f5062187320eaf9d177c3c1f647adc22e" },

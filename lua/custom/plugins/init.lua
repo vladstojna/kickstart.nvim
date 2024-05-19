@@ -2,6 +2,10 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
+
+-- width used for zen-mode and no-neck-pain
+local centered_width = 120
+
 return {
   'nvim-treesitter/playground',
   'nvim-treesitter/nvim-treesitter-context',
@@ -144,6 +148,7 @@ return {
     config = function()
       require('zen-mode').setup {
         window = {
+          width = centered_width,
           backdrop = 0.8,
         },
         plugins = {
@@ -246,6 +251,26 @@ return {
     },
     config = function()
       require('refactoring').setup()
+    end,
+  },
+  {
+    'shortcuts/no-neck-pain.nvim',
+    version = '*',
+    opts = {
+      width = centered_width,
+      minSideBufferWidth = 1, -- always enable side buffers
+      autocmds = {
+        skipEnteringNoNeckPainBuffer = true,
+      },
+      buffers = {
+        wo = {
+          fillchars = 'eob: ',
+        },
+      },
+    },
+    config = function(_, opts)
+      require('no-neck-pain').setup(opts)
+      vim.o.laststatus = 3
     end,
   },
 }

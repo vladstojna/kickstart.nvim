@@ -113,3 +113,6 @@ end, { desc = '[R]efactoring Print [V]ar' })
 vim.keymap.set('n', '<leader>rc', function()
   refactoring.debug.cleanup {}
 end, { desc = '[R]efactoring [C]leanup' })
+
+-- no-neck-pain
+vim.keymap.set('n', '<leader>cc', vim.cmd.NoNeckPain, { desc = 'Toggle Centered View' })

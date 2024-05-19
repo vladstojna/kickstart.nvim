@@ -645,6 +645,8 @@ require('lazy').setup({
           },
         },
       }
+      -- Extend language servers with value from custom file to avoid modifying init.lua
+      servers = vim.tbl_deep_extend('force', servers, require 'custom.mason.lspservers')
 
       -- Ensure the servers and tools above are installed
       --
@@ -663,6 +665,8 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
+      -- Extend list with list of tools from custom file to avoid modifying init.lua
+      vim.list_extend(ensure_installed, require 'custom.mason.tools')
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {

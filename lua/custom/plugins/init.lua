@@ -20,9 +20,14 @@ return {
   'JoosepAlviste/nvim-ts-context-commentstring',
   'sindrets/diffview.nvim',
   'rhysd/git-messenger.vim',
-  'lambdalisue/suda.vim',
   'stevearc/dressing.nvim',
   'pearofducks/ansible-vim',
+  {
+    'lambdalisue/suda.vim',
+    init = function()
+      vim.g.suda_smart_edit = 1
+    end,
+  },
   {
     'rmagatti/auto-session',
     config = function()

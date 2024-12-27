@@ -23,11 +23,36 @@ vim.keymap.set('n', '<leader>ss', require('auto-session.session-lens').search_se
 })
 
 -- trouble
-vim.keymap.set('n', '<leader>xw', '<cmd>TroubleToggle workspace_diagnostics<cr>', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>xl', '<cmd>TroubleToggle loclist<cr>', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>xq', '<cmd>TroubleToggle quickfix<cr>', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>xR', '<cmd>TroubleToggle lsp_references<cr>', { silent = true, noremap = true })
+vim.keymap.set('n', '<leader>xw', '<cmd>Trouble diagnostics toggle<cr>', {
+  desc = 'Diagnostics (Trouble)',
+  silent = true,
+  noremap = true,
+})
+vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', {
+  desc = 'Buffer Diagnostics (Trouble)',
+  silent = true,
+  noremap = true,
+})
+vim.keymap.set('n', '<leader>xl', '<cmd>Trouble loclist toggle<cr>', {
+  desc = 'Location List (Trouble)',
+  silent = true,
+  noremap = true,
+})
+vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', {
+  desc = 'Quickfix List (Trouble)',
+  silent = true,
+  noremap = true,
+})
+vim.keymap.set('n', '<leader>xR', '<cmd>Trouble lsp toggle focus=false win.position=right<cr>', {
+  desc = 'LSP Definitions / references / ... (Trouble)',
+  silent = true,
+  noremap = true,
+})
+vim.keymap.set('n', '<leader>xs', '<cmd>Trouble symbols toggle focus=false<cr>', {
+  desc = 'Symbols (Trouble)',
+  silent = true,
+  noremap = true,
+})
 
 local signs = {
   Error = ' ',

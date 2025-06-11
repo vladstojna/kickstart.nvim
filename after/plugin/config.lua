@@ -43,12 +43,12 @@ vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', {
   silent = true,
   noremap = true,
 })
-vim.keymap.set('n', '<leader>xR', '<cmd>Trouble lsp toggle focus=false win.position=right<cr>', {
+vim.keymap.set('n', '<leader>xr', '<cmd>Trouble lsp toggle focus=false<cr>', {
   desc = 'LSP Definitions / references / ... (Trouble)',
   silent = true,
   noremap = true,
 })
-vim.keymap.set('n', '<leader>xs', '<cmd>Trouble symbols toggle focus=false<cr>', {
+vim.keymap.set('n', '<leader>xs', '<cmd>Trouble symbols toggle focus=true win.type=float<cr>', {
   desc = 'Symbols (Trouble)',
   silent = true,
   noremap = true,
@@ -73,7 +73,7 @@ vim.keymap.set('n', '<leader>uu', vim.cmd.UndotreeToggle, { desc = 'Toggle Undot
 vim.keymap.set('n', '<leader>z', vim.cmd.ZenMode, { desc = 'Toggle [Z]en Mode' })
 
 -- todo-comments
-vim.keymap.set('n', '<leader>xt', vim.cmd.TodoTrouble, { desc = 'Todo (Trouble)' })
+vim.keymap.set('n', '<leader>xt', '<cmd>TodoTrouble toggle<cr>', { desc = 'Todo (Trouble)' })
 
 -- mini
 require('mini.trailspace').setup()

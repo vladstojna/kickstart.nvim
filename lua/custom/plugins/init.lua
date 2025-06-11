@@ -88,6 +88,7 @@ return {
       vim.notify.setup {
         background_colour = '#000000',
         stages = 'static',
+        merge_duplicates = true,
       }
     end,
   },

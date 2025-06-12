@@ -30,8 +30,8 @@ vim.keymap.set('n', '<leader>q', vim.cmd.q, { silent = true, noremap = true, des
 vim.keymap.set('n', '<leader>qq', vim.cmd.qa, { silent = true, noremap = true, desc = 'Quit all' })
 
 vim.keymap.set('n', '<C-k>', function()
-  vim.diagnostic.jump { count = -1 }
+  vim.diagnostic.jump { count = -1, float = true }
 end, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', '<C-j>', function()
-  vim.diagnostic.jump { count = 1 }
+  vim.diagnostic.jump { count = 1, float = true }
 end, { desc = 'Go to next diagnostic message' })

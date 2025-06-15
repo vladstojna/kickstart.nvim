@@ -261,4 +261,50 @@ return {
       vim.o.laststatus = 3
     end,
   },
+  {
+    'Badhi/nvim-treesitter-cpp-tools',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = 'cpp',
+    config = function()
+      require('nt-cpp-tools').setup {
+        preview = {
+          quit = 'q',
+          accept = '<tab>',
+        },
+        header_extension = 'hpp',
+        source_extension = 'cpp',
+        custom_define_class_function_commands = {
+          TSCppImplWrite = {
+            output_handle = require('nt-cpp-tools.output_handlers').get_add_to_cpp(),
+          },
+        },
+      }
+      vim.keymap.set('n', '<leader>lgi', vim.cmd.TSCppDefineClassFunc, { desc = 'TSCpp: Implement out-of-class member functions' })
+      vim.keymap.set('n', '<leader>lgc', vim.cmd.TSCppMakeConcreteClass, { desc = 'TSCpp: Create a concrete class' })
+      vim.keymap.set('n', '<leader>lgd', vim.cmd.TSCppImplWrite, { desc = 'TSCpp: Add definition to cpp file' })
+      vim.keymap.set('n', '<leader>lgt', vim.cmd.TSCppRuleOf3, { desc = 'TSCpp: Implement rule-of-3' })
+      vim.keymap.set('n', '<leader>lgf', vim.cmd.TSCppRuleOf5, { desc = 'TSCpp: Implement rule-of-5' })
+    end,
+  },
+  {
+    'p00f/clangd_extensions.nvim',
+    event = 'LspAttach',
+    opts = {
+      memory_usage = {
+        border = 'single',
+      },
+      symbol_info = {
+        border = 'single',
+      },
+    },
+    config = function(opts)
+      local clients = vim.lsp.get_clients { name = 'clangd' }
+      if #clients >= 1 and clients[1].name == 'clangd' then
+        require('clangd_extensions').setup(opts)
+        vim.keymap.set('n', '<leader>ls', vim.cmd.ClangdShowSymbolInfo, { desc = 'Clangd: Show symbol info' })
+        vim.keymap.set('n', '<leader>lh', vim.cmd.NoNeckPain, { desc = 'Clangd: Switch between source and header' })
+        vim.keymap.set('n', '<leader>lt', vim.cmd.NoNeckPain, { desc = 'Clangd: Show type hierarchy' })
+      end
+    end,
+  },
 }

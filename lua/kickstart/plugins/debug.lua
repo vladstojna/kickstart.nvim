@@ -58,24 +58,39 @@ return {
       desc = 'Debug: Step Out',
     },
     {
-      '<leader>b',
+      '<leader>bb',
       function()
         require('dap').toggle_breakpoint()
       end,
       desc = 'Debug: Toggle Breakpoint',
     },
     {
-      '<leader>B',
+      '<leader>bB',
       function()
         require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
       end,
       desc = 'Debug: Set Breakpoint',
     },
+    {
+      '<leader>bc',
+      function()
+        require('dap').clear_breakpoints()
+        require 'notify'('Breakpoints cleared', 'warn')
+      end,
+      desc = 'Debug: Clear Breakpoints',
+    },
+    {
+      '<F6>',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Terminate session.',
+    },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     {
       '<F7>',
       function()
-        require('dapui').toggle()
+        require('dapui').toggle { reset = true }
       end,
       desc = 'Debug: See last session result.',
     },
@@ -101,68 +116,51 @@ return {
       },
     }
 
-    -- Basic debugging keymaps, feel free to change to your liking!
-    vim.keymap.set('n', '<F5>', dap.continue, { desc = "DAP: Launch/Continue" })
-    vim.keymap.set('n', '<F6>', dap.terminate, { desc = "DAP: Terminate" })
-    vim.keymap.set('n', '<F1>', dap.step_into, { desc = "DAP: Step into" })
-    vim.keymap.set('n', '<F2>', dap.step_over, { desc = "DAP: Step over" })
-    vim.keymap.set('n', '<F3>', dap.step_out, { desc = "DAP: Step out" })
-    vim.keymap.set('n', '<leader>bb', dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
-    vim.keymap.set('n', '<leader>bc', function()
-      dap.clear_breakpoints()
-      require("notify")("Breakpoints cleared", "warn")
-    end, { desc = "DAP: Clear Breakpoints" })
-    vim.keymap.set('n', '<leader>bB', function()
-      dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-    end, { desc = "DAP: Toggle Breakpoint (cond)" })
-
-    local telescope = require('telescope')
-    telescope.load_extension('dap')
-    vim.keymap.set('n', '<leader>sb',
-      telescope.extensions.dap.list_breakpoints,
-      { desc = 'DAP: [S]earch [B]reakpoints' })
-    vim.keymap.set('n', '<leader>sv',
-      telescope.extensions.dap.variables,
-      { desc = 'DAP: [S]earch [V]ariables' })
-    vim.keymap.set('n', '<leader>sF',
-      telescope.extensions.dap.frames,
-      { desc = 'DAP: [S]earch [F]rames' })
+    local telescope = require 'telescope'
+    telescope.load_extension 'dap'
+    vim.keymap.set('n', '<leader>sb', telescope.extensions.dap.list_breakpoints, { desc = 'Debug: [S]earch [B]reakpoints' })
+    vim.keymap.set('n', '<leader>sv', telescope.extensions.dap.variables, { desc = 'Debug: [S]earch [V]ariables' })
+    vim.keymap.set('n', '<leader>sF', telescope.extensions.dap.frames, { desc = 'Debug: [S]earch [F]rames' })
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
-      layouts = { {
-        elements = { {
-          id = "scopes",
-          size = 0.25
-        }, {
-          id = "breakpoints",
-          size = 0.25
-        }, {
-          id = "stacks",
-          size = 0.25
-        }, {
-          id = "watches",
-          size = 0.25
-        } },
-        position = "left",
-        size = 70
-      }, {
-        elements = { {
-          id = "repl",
-          size = 0.5
-        }, {
-          id = "console",
-          size = 0.5
-        } },
-        position = "bottom",
-        size = 12
-      } },
+      layouts = {
+        {
+          elements = {
+            {
+              id = 'scopes',
+              size = 0.25,
+            },
+            {
+              id = 'breakpoints',
+              size = 0.25,
+            },
+            {
+              id = 'stacks',
+              size = 0.25,
+            },
+            {
+              id = 'watches',
+              size = 0.25,
+            },
+          },
+          position = 'left',
+          size = 70,
+        },
+        {
+          elements = { {
+            id = 'repl',
+            size = 0.5,
+          }, {
+            id = 'console',
+            size = 0.5,
+          } },
+          position = 'bottom',
+          size = 12,
+        },
+      },
     }
-    vim.keymap.set('n', '<F7>', function()
-      dapui.toggle({ reset = true })
-    end, { desc = "DAP: Toggle UI" })
-
 
     -- Change breakpoint icons
     -- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
@@ -191,6 +189,6 @@ return {
     -- Install python specific config
     require('dap-python').setup()
     -- Setup additional adapter/configuration definitions
-    require('custom.dap')
+    require 'custom.dap'
   end,
 }

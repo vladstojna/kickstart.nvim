@@ -302,8 +302,8 @@ return {
       if #clients >= 1 and clients[1].name == 'clangd' then
         require('clangd_extensions').setup(opts)
         vim.keymap.set('n', '<leader>ls', vim.cmd.ClangdShowSymbolInfo, { desc = 'Clangd: Show symbol info' })
-        vim.keymap.set('n', '<leader>lh', vim.cmd.NoNeckPain, { desc = 'Clangd: Switch between source and header' })
-        vim.keymap.set('n', '<leader>lt', vim.cmd.NoNeckPain, { desc = 'Clangd: Show type hierarchy' })
+        vim.keymap.set('n', '<leader>lh', vim.cmd.ClangdSwitchSourceHeader, { desc = 'Clangd: Switch between source and header' })
+        vim.keymap.set('n', '<leader>lt', vim.cmd.ClangdTypeHierarchy, { desc = 'Clangd: Show type hierarchy' })
       end
     end,
   },

@@ -35,3 +35,5 @@ end, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', '<C-j>', function()
   vim.diagnostic.jump { count = 1, float = true }
 end, { desc = 'Go to next diagnostic message' })
+
+vim.keymap.set('n', '<leader><Tab>', ':b#<cr>', { silent = true, noremap = true, desc = 'Toggle between last two buffers' })

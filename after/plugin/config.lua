@@ -120,12 +120,9 @@ vim.keymap.set('n', '<leader>sA', function()
 end, { desc = '[S]earch [A]ll Files (+ hidden & ignored)' })
 
 vim.keymap.set('n', '<leader>sk', telescope_builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-vim.keymap.set('n', '<leader><Tab>', function()
+vim.keymap.set('n', '<leader><leader>', function()
   telescope_builtin.buffers { sort_mru = true, sort_lastused = true, ignore_current_buffer = true }
 end, { desc = 'List open buffers' })
-vim.keymap.set('n', '<leader><leader>', function()
-  telescope_builtin.buffers { sort_mru = true, sort_lastused = true, ignore_current_buffer = true, only_cwd = true }
-end, { desc = 'List open buffers (cwd)' })
 
 -- refactoring
 local refactoring = require 'refactoring'

@@ -164,7 +164,28 @@ return {
   },
   {
     'stevearc/oil.nvim',
-    opts = {},
+    opts = {
+      delete_to_trash = true,
+      view_options = {
+        show_hidden = true,
+        natural_order = true,
+        is_always_hidden = function(name, _)
+          return name == '..' or name == '.git'
+        end,
+      },
+      float = {
+        padding = 2,
+        max_width = 100,
+        max_height = 0,
+        win_options = {
+          winblend = 0,
+        },
+      },
+      win_options = {
+        winblend = 10,
+        wrap = true,
+      },
+    },
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
   {

@@ -3,8 +3,8 @@ vim.keymap.set('n', '<leader>bd', '<cmd>Bdelete<CR>')
 vim.keymap.set('n', '<leader>bD', '<cmd>Bdelete!<CR>')
 
 -- oil
-vim.keymap.set('n', '<leader>-', '<cmd>Oil<cr>', { noremap = true, desc = 'Explore parent directory of current buffer', silent = true })
-vim.keymap.set('n', '<leader>E', '<cmd>Oil .<cr>', { noremap = true, desc = '[E]xplore root directory', silent = true })
+vim.keymap.set('n', '<leader>e', '<cmd>Oil --float<cr>', { noremap = true, desc = '[E]xplore directory of active buffer', silent = true })
+vim.keymap.set('n', '<leader>E', '<cmd>Oil . --float<cr>', { noremap = true, desc = '[E]xplore root directory', silent = true })
 
 -- harpoon
 local mark = require 'harpoon.mark'

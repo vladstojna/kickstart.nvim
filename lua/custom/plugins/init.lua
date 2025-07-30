@@ -328,4 +328,38 @@ return {
       end
     end,
   },
+  {
+    'jmacadie/telescope-hierarchy.nvim',
+    dependencies = {
+      {
+        'nvim-telescope/telescope.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+      },
+    },
+    keys = {
+      {
+        'ghi',
+        '<cmd>Telescope hierarchy incoming_calls<cr>',
+        desc = 'LSP: Call hierarchy (incoming)',
+      },
+      {
+        'gho',
+        '<cmd>Telescope hierarchy outgoing_calls<cr>',
+        desc = 'LSP: Call hierarchy (outgoing)',
+      },
+    },
+    opts = {
+      extensions = {
+        hierarchy = {
+          initial_multi_expand = true,
+          multi_depth = 5,
+          layout_strategy = 'horizontal',
+        },
+      },
+    },
+    config = function(_, opts)
+      require('telescope').setup(opts)
+      require('telescope').load_extension 'hierarchy'
+    end,
+  },
 }

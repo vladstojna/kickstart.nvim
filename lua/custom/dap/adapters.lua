@@ -8,7 +8,13 @@ local M = {
   gdb = {
     type = 'executable',
     command = 'gdb',
-    args = { '--quiet', '--interpreter=dap', '--eval-command', 'set print pretty on' },
+    args = { '--quiet', '--interpreter=dap' },
+  },
+
+  gdb_localsysroot = {
+    type = 'executable',
+    command = 'gdb',
+    args = { '--quiet', '--interpreter=dap', '--eval-command', 'set sysroot /' },
   },
 
   cppdbg = {

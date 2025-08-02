@@ -49,7 +49,21 @@ local function insert_configs(tab, debugger_name)
   })
 end
 
+local function gdbserver_attach(tab, adapter_name, libs_type)
+  table.insert(tab, {
+    name = 'Attach to gdbserver (' .. libs_type .. ')',
+    type = adapter_name,
+    request = 'attach',
+    target = function()
+      return vim.fn.input { prompt = 'Target: ', default = ':2345' }
+    end,
+    cwd = '${workspaceFolder}',
+  })
+end
+
 local M = {}
 insert_configs(M, 'gdb')
 insert_configs(M, 'lldb')
+gdbserver_attach(M, 'gdb_localsysroot', 'local libs')
+gdbserver_attach(M, 'gdb', 'remote libs')
 return M

@@ -428,6 +428,8 @@ require('lazy').setup({
         },
       }
 
+      require('custom.telescope').setup()
+
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
@@ -466,6 +468,8 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+
+      require('custom.telescope').keymaps()
     end,
   },
 

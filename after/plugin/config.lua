@@ -76,56 +76,9 @@ vim.keymap.set('n', '<leader>xt', '<cmd>TodoTrouble toggle<cr>', { desc = 'Todo 
 require('mini.trailspace').setup()
 require('mini.pairs').setup()
 
--- telescope
-local telescope_builtin = require 'telescope.builtin'
-local actions = require 'telescope.actions'
-local telescope = require 'telescope'
-
-telescope.setup {
-  pickers = {
-    find_files = {
-      theme = 'dropdown',
-      previewer = false,
-      layout_config = { width = 0.4 },
-    },
-    buffers = {
-      sort_last_used = true,
-      previewer = false,
-      theme = 'dropdown',
-      layout_config = { width = 0.4 },
-      mappings = {
-        i = {
-          ['<c-d>'] = actions.delete_buffer,
-        },
-        n = {
-          ['dd'] = actions.delete_buffer,
-        },
-      },
-    },
-  },
-}
-
-vim.keymap.set('n', '<leader>sa', function()
-  telescope_builtin.find_files {
-    hidden = true,
-    no_ignore = false,
-  }
-end, { desc = '[S]earch [A]ll Files (+ hidden)' })
-
-vim.keymap.set('n', '<leader>sA', function()
-  telescope_builtin.find_files {
-    hidden = true,
-    no_ignore = true,
-  }
-end, { desc = '[S]earch [A]ll Files (+ hidden & ignored)' })
-
-vim.keymap.set('n', '<leader>sk', telescope_builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-vim.keymap.set('n', '<leader><leader>', function()
-  telescope_builtin.buffers { sort_mru = true, sort_lastused = true, ignore_current_buffer = true }
-end, { desc = 'List open buffers' })
-
 -- refactoring
 local refactoring = require 'refactoring'
+local telescope = require 'telescope'
 telescope.load_extension 'refactoring'
 
 vim.keymap.set({ 'n', 'x' }, '<leader>rr', function()

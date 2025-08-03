@@ -10,7 +10,6 @@ return {
   'nvim-treesitter/playground',
   'nvim-treesitter/nvim-treesitter-context',
   'theprimeagen/harpoon',
-  'mbbill/undotree',
   'RRethy/vim-illuminate',
   'ahmedkhalf/project.nvim',
   'famiu/bufdelete.nvim',
@@ -360,6 +359,34 @@ return {
     config = function(_, opts)
       require('telescope').setup(opts)
       require('telescope').load_extension 'hierarchy'
+    end,
+  },
+  {
+    'debugloop/telescope-undo.nvim',
+    dependencies = {
+      {
+        'nvim-telescope/telescope.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+      },
+    },
+    keys = {
+      {
+        '<leader>u',
+        '<cmd>Telescope undo<cr>',
+        desc = 'undo history',
+      },
+    },
+    opts = {
+      extensions = {
+        undo = vim.tbl_extend('error', require('custom.telescope').fullscreen_spec(), {
+          vim_diff_opts = { ctxlen = 4 },
+          preview_title = 'Diff',
+        }),
+      },
+    },
+    config = function(_, opts)
+      require('telescope').setup(opts)
+      require('telescope').load_extension 'undo'
     end,
   },
 }

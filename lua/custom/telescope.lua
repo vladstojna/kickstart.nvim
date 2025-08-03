@@ -2,48 +2,52 @@ local builtin = require 'telescope.builtin'
 local actions = require 'telescope.actions'
 local act_layout = require 'telescope.actions.layout'
 
-local M = {
-  setup = function()
-    local standard_setup = {
-      preview = { hide_on_startup = true },
-      layout_strategy = 'vertical',
-      layout_config = {
-        vertical = {
-          mirror = true,
-          prompt_position = 'top',
-          width = function(_, cols, _)
-            return math.min(math.floor(cols * 0.9), 120)
-          end,
-          height = function(_, _, rows)
-            return math.floor(rows * 0.8)
-          end,
-          preview_cutoff = 10,
-          preview_height = 0.4,
-        },
-      },
-    }
+local fullscreen_setup_common = {
+  prompt_position = 'top',
+  width = function(_, cols, _)
+    return math.min(math.floor(cols * 0.95), 200)
+  end,
+  height = function(_, _, rows)
+    return math.floor(rows * 0.95)
+  end,
+  preview_cutoff = 10,
+}
 
-    local fullscreen_setup_common = {
+local standard_setup = {
+  preview = { hide_on_startup = true },
+  layout_strategy = 'vertical',
+  layout_config = {
+    vertical = {
+      mirror = true,
       prompt_position = 'top',
       width = function(_, cols, _)
-        return math.min(math.floor(cols * 0.95), 200)
+        return math.min(math.floor(cols * 0.9), 120)
       end,
       height = function(_, _, rows)
-        return math.floor(rows * 0.95)
+        return math.floor(rows * 0.8)
       end,
       preview_cutoff = 10,
-    }
+      preview_height = 0.4,
+    },
+  },
+}
 
-    local fullscreen_setup = {
-      preview = { hide_on_startup = false },
-      layout_strategy = 'flex',
-      layout_config = {
-        flex = { flip_columns = 100 },
-        horizontal = vim.tbl_extend('error', fullscreen_setup_common, { mirror = false, preview_width = 0.5 }),
-        vertical = vim.tbl_extend('error', fullscreen_setup_common, { mirror = true, preview_height = 0.5 }),
-      },
-    }
+local fullscreen_setup = {
+  preview = { hide_on_startup = false },
+  layout_strategy = 'flex',
+  layout_config = {
+    flex = { flip_columns = 100 },
+    horizontal = vim.tbl_extend('error', fullscreen_setup_common, { mirror = false, preview_width = 0.5 }),
+    vertical = vim.tbl_extend('error', fullscreen_setup_common, { mirror = true, preview_height = 0.5 }),
+  },
+}
 
+local M = {
+  fullscreen_spec = function()
+    return fullscreen_setup
+  end,
+
+  setup = function()
     require('telescope').setup {
       defaults = vim.tbl_extend('error', standard_setup, {
         winblend = 10,

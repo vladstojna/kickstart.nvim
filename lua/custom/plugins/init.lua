@@ -382,4 +382,30 @@ return {
       require('telescope').load_extension 'undo'
     end,
   },
+  {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+    keys = {
+      {
+        '<leader>gs',
+        '<cmd>Neogit<cr>',
+        desc = 'Neogit: status',
+      },
+      {
+        '<leader>gc',
+        '<cmd>Neogit commit<cr>',
+        desc = 'Neogit: commit popup',
+      },
+      {
+        '<leader>gd',
+        '<cmd>Neogit diff<cr>',
+        desc = 'Neogit: diff',
+      },
+    },
+  },
+  { 'akinsho/git-conflict.nvim', version = '*', config = true, opts = { disable_diagnostics = true } },
 }

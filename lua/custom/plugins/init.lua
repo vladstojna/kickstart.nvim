@@ -28,6 +28,11 @@ return {
       require('auto-session').setup {
         log_level = 'error',
       }
+      vim.keymap.set('n', '<leader>S', require('auto-session.session-lens').search_session, {
+        noremap = true,
+        desc = 'List saved sessions',
+      })
+      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
     end,
   },
   {

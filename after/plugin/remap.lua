@@ -35,3 +35,6 @@ vim.keymap.set('n', '<C-j>', function()
 end, { desc = 'Go to next diagnostic message' })
 
 vim.keymap.set('n', '<leader><Tab>', ':b#<cr>', { silent = true, noremap = true, desc = 'Toggle between last two buffers' })
+vim.keymap.set('n', '<leader>ct', ':tabclose<cr>', { silent = true, noremap = true, desc = '[C]lose [T]ab' })
+vim.keymap.set('n', '<C-Left>', 'gT', { silent = true, noremap = true, desc = 'Previous Tab' })
+vim.keymap.set('n', '<C-Right>', 'gt', { silent = true, noremap = true, desc = 'Next Tab' })

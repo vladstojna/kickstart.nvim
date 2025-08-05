@@ -8,7 +8,6 @@ local centered_width = 120
 
 return {
   'nvim-treesitter/playground',
-  'nvim-treesitter/nvim-treesitter-context',
   'theprimeagen/harpoon',
   'RRethy/vim-illuminate',
   'ahmedkhalf/project.nvim',
@@ -22,6 +21,12 @@ return {
   'lambdalisue/suda.vim',
   'stevearc/dressing.nvim',
   'pearofducks/ansible-vim',
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {
+      max_lines = 2,
+    },
+  },
   {
     'rmagatti/auto-session',
     config = function()

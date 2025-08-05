@@ -14,7 +14,6 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 8
 vim.opt.isfname:append '@-@'
 
-vim.opt.colorcolumn = '80'
 vim.opt.cmdheight = 0
 
 -- for now, set winborder if nvim is >0.11

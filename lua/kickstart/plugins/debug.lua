@@ -60,21 +60,28 @@ return {
     {
       '<leader>bb',
       function()
-        require('dap').toggle_breakpoint()
+        require('custom.dap.persistent_breakpoints').toggle_breakpoint()
       end,
       desc = 'Debug: Toggle Breakpoint',
     },
     {
       '<leader>bB',
       function()
-        require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+        require('custom.dap.persistent_breakpoints').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
       end,
       desc = 'Debug: Set Breakpoint',
     },
     {
+      '<leader>bl',
+      function()
+        require('custom.dap.persistent_breakpoints').set_log_point(vim.fn.input 'Log message: ')
+      end,
+      desc = 'Debug: Set log point',
+    },
+    {
       '<leader>bc',
       function()
-        require('dap').clear_breakpoints()
+        require('custom.dap.persistent_breakpoints').clear_breakpoints()
         require 'notify'('Breakpoints cleared', 'warn')
       end,
       desc = 'Debug: Clear Breakpoints',

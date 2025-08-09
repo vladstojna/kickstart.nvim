@@ -38,6 +38,7 @@ return {
   {
     'rmagatti/auto-session',
     config = function()
+      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals'
       require('auto-session').setup {
         log_level = 'error',
       }
@@ -45,7 +46,6 @@ return {
         noremap = true,
         desc = 'List saved sessions',
       })
-      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
     end,
   },
   {

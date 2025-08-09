@@ -13,6 +13,22 @@ return {
     },
     config = function()
       require('neotest').setup {
+        status = {
+          virtual_text = true,
+        },
+        output = {
+          open_on_run = true,
+        },
+        quickfix = {
+          open = function()
+            local has_trouble, trouble = pcall(require, 'trouble')
+            if has_trouble then
+              trouble.open { mode = 'quickfix', focus = false }
+            else
+              vim.cmd.copen()
+            end
+          end,
+        },
         discovery = {
           enabled = false,
           concurrent = 1,

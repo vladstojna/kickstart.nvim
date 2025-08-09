@@ -38,3 +38,18 @@ vim.keymap.set('n', '<leader><Tab>', ':b#<cr>', { silent = true, noremap = true,
 vim.keymap.set('n', '<leader>ct', ':tabclose<cr>', { silent = true, noremap = true, desc = '[C]lose [T]ab' })
 vim.keymap.set('n', '<C-Left>', 'gT', { silent = true, noremap = true, desc = 'Previous Tab' })
 vim.keymap.set('n', '<C-Right>', 'gt', { silent = true, noremap = true, desc = 'Next Tab' })
+
+vim.keymap.set('n', 'cp', require('custom.util').copy_active_buffer_path, { silent = true, noremap = true, desc = '[C]opy [P]ath of active buffer' })
+vim.keymap.set('n', '<leader>cp', function()
+  require('custom.util').copy_active_buffer_path '+'
+end, { silent = true, noremap = true, desc = '[C]opy [P]ath of active buffer' })
+
+vim.keymap.set(
+  'n',
+  'cP',
+  require('custom.util').copy_active_buffer_abs_path,
+  { silent = true, noremap = true, desc = '[C]opy Absolute [P]ath of active buffer' }
+)
+vim.keymap.set('n', '<leader>cP', function()
+  require('custom.util').copy_active_buffer_abs_path '+'
+end, { silent = true, noremap = true, desc = '[C]opy Absolute [P]ath of active buffer' })

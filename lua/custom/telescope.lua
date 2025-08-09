@@ -1,6 +1,25 @@
 local builtin = require 'telescope.builtin'
 local actions = require 'telescope.actions'
 local act_layout = require 'telescope.actions.layout'
+local act_state = require 'telescope.actions.state'
+
+local function yank_absolute_path(register)
+  local entry = act_state.get_selected_entry()
+
+  vim.fn.setreg(register or '', entry.path)
+  vim.notify('Copied ' .. entry.path, vim.log.levels.INFO)
+end
+
+local function yank_relative_path(register)
+  local function removeprefix(s, p)
+    return (string.sub(s, 0, #p) == p) and string.sub(s, #p + 1) or s
+  end
+  local entry = act_state.get_selected_entry()
+  local relative_path = removeprefix(entry.path, vim.fn.getcwd(0) .. '/')
+
+  vim.fn.setreg(register or '', relative_path)
+  vim.notify('Copied ' .. relative_path, vim.log.levels.INFO)
+end
 
 local fullscreen_setup_common = {
   prompt_position = 'top',
@@ -73,6 +92,30 @@ local M = {
           file_ignore_patterns = {
             '.git/.*',
           },
+          mappings = {
+            n = {
+              ['ya'] = function()
+                yank_absolute_path()
+              end,
+              ['yy'] = function()
+                yank_relative_path()
+              end,
+              ['<Leader>ya'] = function()
+                yank_absolute_path '+'
+              end,
+              ['<Leader>yy'] = function()
+                yank_relative_path '+'
+              end,
+            },
+            i = {
+              ['<C-y>a'] = function()
+                yank_absolute_path()
+              end,
+              ['<C-y>y'] = function()
+                yank_absolute_path()
+              end,
+            },
+          },
         },
         buffers = {
           sort_lastused = true,
@@ -80,9 +123,27 @@ local M = {
           mappings = {
             i = {
               ['<c-d>'] = actions.delete_buffer,
+              ['<C-y>a'] = function()
+                yank_absolute_path()
+              end,
+              ['<C-y>y'] = function()
+                yank_absolute_path()
+              end,
             },
             n = {
               ['dd'] = actions.delete_buffer,
+              ['ya'] = function()
+                yank_absolute_path()
+              end,
+              ['yy'] = function()
+                yank_relative_path()
+              end,
+              ['<Leader>ya'] = function()
+                yank_absolute_path '+'
+              end,
+              ['<Leader>yy'] = function()
+                yank_relative_path '+'
+              end,
             },
           },
         },

@@ -41,6 +41,7 @@ return {
       vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals'
       require('auto-session').setup {
         log_level = 'error',
+        git_use_branch_name = true,
       }
       vim.keymap.set('n', '<leader>S', require('auto-session.session-lens').search_session, {
         noremap = true,

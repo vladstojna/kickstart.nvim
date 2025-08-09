@@ -409,4 +409,17 @@ return {
     },
   },
   { 'akinsho/git-conflict.nvim', version = '*', config = true, opts = { disable_diagnostics = true } },
+  {
+    'AckslD/nvim-neoclip.lua',
+    dependencies = {
+      { 'nvim-telescope/telescope.nvim' },
+    },
+    config = function()
+      require('neoclip').setup()
+      vim.keymap.set('n', '<leader>sc', require('telescope').extensions.neoclip.default, {
+        noremap = true,
+        desc = '[S]earch [C]lipboard history',
+      })
+    end,
+  },
 }

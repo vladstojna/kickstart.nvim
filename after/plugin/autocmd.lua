@@ -23,3 +23,12 @@ vim.api.nvim_create_autocmd('CmdlineLeave', {
   group = cmdGrp,
   callback = function() set_cmdheight(0) end,
 })
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = 'copilot-*',
+  callback = function()
+    vim.opt_local.relativenumber = false
+    vim.opt_local.number = false
+    vim.opt_local.conceallevel = 0
+  end,
+})

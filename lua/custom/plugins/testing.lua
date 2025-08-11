@@ -11,6 +11,78 @@ return {
       'alfaix/neotest-gtest',
       'nvim-neotest/neotest-python',
     },
+    keys = {
+      {
+        '<leader>nr',
+        function()
+          require('neotest').run.run()
+        end,
+        desc = 'Neotest: run nearest',
+      },
+      {
+        '<leader>nl',
+        function()
+          require('neotest').run.run_last()
+        end,
+        desc = 'Neotest: run last',
+      },
+      {
+        '<leader>nd',
+        function()
+          require('neotest').run.run { strategy = 'dap' }
+        end,
+        desc = 'Neotest: debug nearest',
+      },
+      {
+        '<leader>nD',
+        function()
+          require('neotest').run.run_last { strategy = 'dap' }
+        end,
+        desc = 'Neotest: debug last',
+      },
+      {
+        '<leader>nf',
+        function()
+          require('neotest').run.run(vim.fn.expand '%')
+        end,
+        desc = 'Neotest: run file',
+      },
+      {
+        '<leader>nF',
+        function()
+          require('neotest').run.run { vim.fn.expand '%', strategy = 'dap' }
+        end,
+        desc = 'Neotest: debug file',
+      },
+      {
+        '<leader>nx',
+        function()
+          require('neotest').run.stop { interactive = true }
+        end,
+        desc = 'Neotest: stop',
+      },
+      {
+        '<leader>na',
+        function()
+          require('neotest').run.attach { interactive = true }
+        end,
+        desc = 'Neotest: attach',
+      },
+      {
+        '<leader>ns',
+        function()
+          require('neotest').summary.toggle()
+        end,
+        desc = 'Neotest: toggle summary',
+      },
+      {
+        '<leader>no',
+        function()
+          require('neotest').output_panel.toggle()
+        end,
+        desc = 'Neotest: toggle output panel',
+      },
+    },
     config = function()
       require('neotest').setup {
         status = {

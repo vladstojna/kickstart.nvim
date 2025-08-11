@@ -11,11 +11,8 @@ local function yank_absolute_path(register)
 end
 
 local function yank_relative_path(register)
-  local function removeprefix(s, p)
-    return (string.sub(s, 0, #p) == p) and string.sub(s, #p + 1) or s
-  end
   local entry = act_state.get_selected_entry()
-  local relative_path = removeprefix(entry.path, vim.fn.getcwd(0) .. '/')
+  local relative_path = require('custom.util').string_remove_prefix(entry.path, vim.fn.getcwd(0) .. '/')
 
   vim.fn.setreg(register or '', relative_path)
   vim.notify('Copied ' .. relative_path, vim.log.levels.INFO)

@@ -156,6 +156,7 @@ local M = {
       }
     end, { desc = '[S]earch [A]ll Files (hidden & ignored)' })
 
+    vim.keymap.set('v', '<leader>s', builtin.grep_string, { desc = '[S]earch selection' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'List open buffers' })
   end,
 }

@@ -58,107 +58,108 @@ local fullscreen_setup = {
   },
 }
 
-local M = {
-  fullscreen_spec = function()
-    return fullscreen_setup
-  end,
+local M = {}
 
-  setup = function()
-    require('telescope').setup {
-      defaults = vim.tbl_extend('error', standard_setup, {
-        winblend = 10,
-        wrap_results = true,
-        sorting_strategy = 'ascending',
-        path_display = { 'filename_first' },
+M.fullscreen_spec = function()
+  return fullscreen_setup
+end
+
+M.setup = function()
+  require('telescope').setup {
+    defaults = vim.tbl_extend('error', standard_setup, {
+      winblend = 10,
+      wrap_results = true,
+      sorting_strategy = 'ascending',
+      path_display = { 'filename_first' },
+      mappings = {
+        n = {
+          ['o'] = act_layout.toggle_preview,
+        },
+        i = {
+          ['<C-o>'] = act_layout.toggle_preview,
+        },
+      },
+    }),
+    pickers = {
+      live_grep = fullscreen_setup,
+      grep_string = fullscreen_setup,
+      diagnostics = fullscreen_setup,
+      find_files = {
+        hidden = true,
+        no_ignore = false,
+        file_ignore_patterns = {
+          '.git/.*',
+        },
         mappings = {
           n = {
-            ['o'] = act_layout.toggle_preview,
+            ['ya'] = function()
+              yank_absolute_path()
+            end,
+            ['yy'] = function()
+              yank_relative_path()
+            end,
+            ['<Leader>ya'] = function()
+              yank_absolute_path '+'
+            end,
+            ['<Leader>yy'] = function()
+              yank_relative_path '+'
+            end,
           },
           i = {
-            ['<C-o>'] = act_layout.toggle_preview,
-          },
-        },
-      }),
-      pickers = {
-        live_grep = fullscreen_setup,
-        grep_string = fullscreen_setup,
-        diagnostics = fullscreen_setup,
-        find_files = {
-          hidden = true,
-          no_ignore = false,
-          file_ignore_patterns = {
-            '.git/.*',
-          },
-          mappings = {
-            n = {
-              ['ya'] = function()
-                yank_absolute_path()
-              end,
-              ['yy'] = function()
-                yank_relative_path()
-              end,
-              ['<Leader>ya'] = function()
-                yank_absolute_path '+'
-              end,
-              ['<Leader>yy'] = function()
-                yank_relative_path '+'
-              end,
-            },
-            i = {
-              ['<C-y>a'] = function()
-                yank_absolute_path()
-              end,
-              ['<C-y>y'] = function()
-                yank_absolute_path()
-              end,
-            },
-          },
-        },
-        buffers = {
-          sort_lastused = true,
-          sort_mru = true,
-          mappings = {
-            i = {
-              ['<c-d>'] = actions.delete_buffer,
-              ['<C-y>a'] = function()
-                yank_absolute_path()
-              end,
-              ['<C-y>y'] = function()
-                yank_absolute_path()
-              end,
-            },
-            n = {
-              ['dd'] = actions.delete_buffer,
-              ['ya'] = function()
-                yank_absolute_path()
-              end,
-              ['yy'] = function()
-                yank_relative_path()
-              end,
-              ['<Leader>ya'] = function()
-                yank_absolute_path '+'
-              end,
-              ['<Leader>yy'] = function()
-                yank_relative_path '+'
-              end,
-            },
+            ['<C-y>a'] = function()
+              yank_absolute_path()
+            end,
+            ['<C-y>y'] = function()
+              yank_absolute_path()
+            end,
           },
         },
       },
+      buffers = {
+        sort_lastused = true,
+        sort_mru = true,
+        mappings = {
+          i = {
+            ['<c-d>'] = actions.delete_buffer,
+            ['<C-y>a'] = function()
+              yank_absolute_path()
+            end,
+            ['<C-y>y'] = function()
+              yank_absolute_path()
+            end,
+          },
+          n = {
+            ['dd'] = actions.delete_buffer,
+            ['ya'] = function()
+              yank_absolute_path()
+            end,
+            ['yy'] = function()
+              yank_relative_path()
+            end,
+            ['<Leader>ya'] = function()
+              yank_absolute_path '+'
+            end,
+            ['<Leader>yy'] = function()
+              yank_relative_path '+'
+            end,
+          },
+        },
+      },
+    },
+  }
+end
+
+M.keymaps = function()
+  vim.keymap.set('n', '<leader>sa', function()
+    builtin.find_files {
+      hidden = true,
+      no_ignore = true,
+      prompt_title = 'Find Files including hidden & ignored',
     }
-  end,
+  end, { desc = '[S]earch [A]ll Files (hidden & ignored)' })
 
-  keymaps = function()
-    vim.keymap.set('n', '<leader>sa', function()
-      builtin.find_files {
-        hidden = true,
-        no_ignore = true,
-      }
-    end, { desc = '[S]earch [A]ll Files (hidden & ignored)' })
-
-    vim.keymap.set('v', '<leader>s', builtin.grep_string, { desc = '[S]earch selection' })
-    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'List open buffers' })
-  end,
-}
+  vim.keymap.set('v', '<leader>s', builtin.grep_string, { desc = '[S]earch selection' })
+  vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'List open buffers' })
+end
 
 return M

@@ -2,6 +2,7 @@ local builtin = require 'telescope.builtin'
 local actions = require 'telescope.actions'
 local act_layout = require 'telescope.actions.layout'
 local act_state = require 'telescope.actions.state'
+local util = require 'custom.util'
 
 local function yank_absolute_path(register)
   local entry = act_state.get_selected_entry()
@@ -12,7 +13,7 @@ end
 
 local function yank_relative_path(register)
   local entry = act_state.get_selected_entry()
-  local relative_path = require('custom.util').string_remove_prefix(entry.path, vim.fn.getcwd(0) .. '/')
+  local relative_path = util.string_remove_prefix(entry.path, vim.fn.getcwd(0) .. '/')
 
   vim.fn.setreg(register or '', relative_path)
   vim.notify('Copied ' .. relative_path, vim.log.levels.INFO)
@@ -58,6 +59,11 @@ local fullscreen_setup = {
   },
 }
 
+local lsp_common = {
+  preview = { hide_on_startup = false },
+  show_line = false,
+}
+
 local M = {}
 
 M.fullscreen_spec = function()
@@ -84,6 +90,21 @@ M.setup = function()
       live_grep = fullscreen_setup,
       grep_string = fullscreen_setup,
       diagnostics = fullscreen_setup,
+
+      lsp_implementations = lsp_common,
+      lsp_definitions = lsp_common,
+      lsp_references = vim.tbl_extend('error', lsp_common, {
+        path_display = function(_, path)
+          local relpath = util.string_remove_prefix(path, vim.fn.getcwd(0) .. '/')
+          local tail = require('telescope.utils').path_tail(relpath)
+          local highlights = {
+            { { 0, #relpath - #tail }, #relpath == #path and 'Comment' or 'Conditional' },
+            { { #relpath - #tail, #relpath }, #relpath == #path and 'Comment' or '@comment.note' },
+          }
+          return relpath, highlights
+        end,
+      }),
+
       find_files = {
         hidden = true,
         no_ignore = false,

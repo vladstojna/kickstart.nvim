@@ -183,4 +183,13 @@ M.keymaps = function()
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'List open buffers' })
 end
 
+M.autocmds = function()
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'TelescopePreviewerLoaded',
+    callback = function()
+      vim.wo.wrap = true
+    end,
+  })
+end
+
 return M

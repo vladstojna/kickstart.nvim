@@ -470,6 +470,7 @@ require('lazy').setup({
       end, { desc = '[S]earch [N]eovim files' })
 
       require('custom.telescope').keymaps()
+      require('custom.telescope').autocmds()
     end,
   },
 

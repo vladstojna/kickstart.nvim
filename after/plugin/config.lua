@@ -84,3 +84,5 @@ end, { desc = '[R]efactoring [C]leanup' })
 
 -- no-neck-pain
 vim.keymap.set('n', '<leader>cc', vim.cmd.NoNeckPain, { desc = 'Toggle Centered View' })
+
+require('custom.format').create_autoformat_toggle_command()

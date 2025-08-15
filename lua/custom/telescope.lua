@@ -199,7 +199,27 @@ M.keymaps = function()
     }
   end, { desc = '[S]earch [A]ll Files (hidden & ignored)' })
 
+  local utils = require 'telescope.utils'
+  vim.keymap.set('n', '<leader>sG', function()
+    builtin.live_grep {
+      cwd = utils.buffer_dir(),
+      prompt_title = 'Live Grep in Buffer Directory',
+    }
+  end, { desc = '[S]earch by [G]rep in buffer directory' })
+
+  vim.keymap.set('n', '<leader>sW', function()
+    builtin.grep_string {
+      cwd = utils.buffer_dir(),
+    }
+  end, { desc = '[S]earch current [W]ord in buffer directory' })
+
   vim.keymap.set('v', '<leader>s', builtin.grep_string, { desc = '[S]earch selection' })
+  vim.keymap.set('v', '<leader>S', function()
+    builtin.grep_string {
+      cwd = utils.buffer_dir(),
+    }
+  end, { desc = '[S]earch selection in buffer directory' })
+
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'List open buffers' })
 end
 

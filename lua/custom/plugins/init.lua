@@ -3,12 +3,8 @@
 --
 -- See the kickstart.nvim README for more information
 
--- width used for zen-mode and no-neck-pain
-local centered_width = 120
-
 return {
   'nvim-treesitter/playground',
-  'theprimeagen/harpoon',
   'RRethy/vim-illuminate',
   'famiu/bufdelete.nvim',
   'tpope/vim-repeat',
@@ -152,29 +148,6 @@ return {
     },
   },
   {
-    'folke/zen-mode.nvim',
-    version = '*',
-    config = function()
-      require('zen-mode').setup {
-        window = {
-          width = centered_width,
-          backdrop = 0.8,
-        },
-        plugins = {
-          gitsigns = { enabled = false },
-        },
-        on_open = function(_)
-          -- set cmdheight to 1 when entering zen-mode, as it hides the
-          -- statusline, thus, no search count
-          vim.o.cmdheight = 1
-        end,
-        on_close = function()
-          vim.o.cmdheight = 0
-        end,
-      }
-    end,
-  },
-  {
     'stevearc/oil.nvim',
     opts = {
       delete_to_trash = true,
@@ -259,7 +232,7 @@ return {
     'shortcuts/no-neck-pain.nvim',
     version = '*',
     opts = {
-      width = centered_width,
+      width = 120,
       minSideBufferWidth = 1, -- always enable side buffers
       autocmds = {
         skipEnteringNoNeckPainBuffer = true,

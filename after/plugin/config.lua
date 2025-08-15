@@ -6,13 +6,6 @@ vim.keymap.set('n', '<leader>bD', '<cmd>Bdelete!<CR>')
 vim.keymap.set('n', '<leader>e', '<cmd>Oil --float<cr>', { noremap = true, desc = '[E]xplore directory of active buffer', silent = true })
 vim.keymap.set('n', '<leader>E', '<cmd>Oil . --float<cr>', { noremap = true, desc = '[E]xplore root directory', silent = true })
 
--- harpoon
-local mark = require 'harpoon.mark'
-local ui = require 'harpoon.ui'
-
-vim.keymap.set('n', '<leader>ha', mark.add_file, { desc = 'Harpoon: add file' })
-vim.keymap.set('n', '<leader>hf', ui.toggle_quick_menu, { desc = 'Harpoon: toggle quick menu' })
-
 -- trouble
 vim.keymap.set('n', '<leader>xw', '<cmd>Trouble diagnostics toggle<cr>', {
   desc = 'Diagnostics (Trouble)',
@@ -56,9 +49,6 @@ for type, icon in pairs(signs) do
   local hl = 'DiagnosticSign' .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
-
--- zenmode
-vim.keymap.set('n', '<leader>z', vim.cmd.ZenMode, { desc = 'Toggle [Z]en Mode' })
 
 -- todo-comments
 vim.keymap.set('n', '<leader>xt', '<cmd>TodoTrouble toggle<cr>', { desc = 'Todo (Trouble)' })

@@ -64,6 +64,22 @@ local lsp_common = {
   show_line = false,
 }
 
+local custom_actions = {}
+
+--- Opens quickfix list in trouble if trouble exists otherwise fallbacks to
+--- builtin telescope action
+---@param prompt_bufnr number: The prompt bufnr
+custom_actions.open_qflist = function(prompt_bufnr)
+  local has_trouble, trouble = pcall(require, 'trouble')
+  if has_trouble then
+    trouble.open { mode = 'quickfix', focus = true }
+  else
+    actions.open_qflist(prompt_bufnr)
+  end
+end
+
+custom_actions = require('telescope.actions.mt').transform_mod(custom_actions)
+
 local M = {}
 
 M.fullscreen_spec = function()
@@ -80,9 +96,13 @@ M.setup = function()
       mappings = {
         n = {
           ['o'] = act_layout.toggle_preview,
+          ['<C-q>'] = actions.smart_send_to_qflist + custom_actions.open_qflist,
+          ['<C-a>'] = actions.smart_add_to_qflist + custom_actions.open_qflist,
         },
         i = {
           ['<C-o>'] = act_layout.toggle_preview,
+          ['<C-q>'] = actions.smart_send_to_qflist + custom_actions.open_qflist,
+          ['<C-a>'] = actions.smart_add_to_qflist + custom_actions.open_qflist,
         },
       },
     }),

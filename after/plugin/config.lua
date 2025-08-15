@@ -6,38 +6,6 @@ vim.keymap.set('n', '<leader>bD', '<cmd>Bdelete!<CR>')
 vim.keymap.set('n', '<leader>e', '<cmd>Oil --float<cr>', { noremap = true, desc = '[E]xplore directory of active buffer', silent = true })
 vim.keymap.set('n', '<leader>E', '<cmd>Oil . --float<cr>', { noremap = true, desc = '[E]xplore root directory', silent = true })
 
--- trouble
-vim.keymap.set('n', '<leader>xw', '<cmd>Trouble diagnostics toggle<cr>', {
-  desc = 'Diagnostics (Trouble)',
-  silent = true,
-  noremap = true,
-})
-vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', {
-  desc = 'Buffer Diagnostics (Trouble)',
-  silent = true,
-  noremap = true,
-})
-vim.keymap.set('n', '<leader>xl', '<cmd>Trouble loclist toggle<cr>', {
-  desc = 'Location List (Trouble)',
-  silent = true,
-  noremap = true,
-})
-vim.keymap.set('n', '<leader>xq', '<cmd>Trouble qflist toggle<cr>', {
-  desc = 'Quickfix List (Trouble)',
-  silent = true,
-  noremap = true,
-})
-vim.keymap.set('n', '<leader>xr', '<cmd>Trouble lsp toggle focus=false<cr>', {
-  desc = 'LSP Definitions / references / ... (Trouble)',
-  silent = true,
-  noremap = true,
-})
-vim.keymap.set('n', '<leader>xs', '<cmd>Trouble symbols toggle focus=true win.type=float<cr>', {
-  desc = 'Symbols (Trouble)',
-  silent = true,
-  noremap = true,
-})
-
 local signs = {
   Error = ' ',
   Warn = ' ',

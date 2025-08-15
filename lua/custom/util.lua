@@ -47,4 +47,16 @@ M.replace_loclist_with_jumplist = function()
   vim.fn.setloclist(0, M.jumplist2table(), 'r')
 end
 
+M.is_test_file = function(path)
+  local has_override, override = pcall(require, 'custom.util-override')
+  if not has_override then
+    return false
+  end
+  local has_test_file_check, is_test_file = pcall(override.is_test_file, path)
+  if not has_test_file_check then
+    return false
+  end
+  return is_test_file
+end
+
 return M

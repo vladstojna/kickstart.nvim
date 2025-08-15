@@ -19,6 +19,10 @@ local function yank_relative_path(register)
   vim.notify('Copied ' .. relative_path, vim.log.levels.INFO)
 end
 
+local function extended(lhs, rhs)
+  return vim.tbl_extend('error', lhs, rhs)
+end
+
 local fullscreen_setup_common = {
   prompt_position = 'top',
   width = function(_, cols, _)
@@ -59,9 +63,36 @@ local fullscreen_setup = {
   },
 }
 
+--- Return path_display-compatible values, filename first that highlight
+--- conditionally depending on the predicate's result
+---@param path string
+---@param opts table
+---@return string, table
+local function get_conditional_path_display(path, opts)
+  local relpath = util.string_remove_prefix(path, vim.fn.getcwd(0) .. '/')
+  local tail = require('telescope.utils').path_tail(relpath)
+  local dirname = vim.fn.fnamemodify(relpath, ':h')
+  local highlights = {
+    { { #tail + 1, #tail + 1 + #dirname }, 'Comment' },
+  }
+  if opts.predicate(path) then
+    table.insert(highlights, { { 0, #tail }, opts.hl_on_true })
+  end
+  return tail .. ' ' .. dirname, highlights
+end
+
 local lsp_common = {
   preview = { hide_on_startup = false },
   show_line = false,
+}
+
+local highlight_test_files = {
+  path_display = function(_, path)
+    return get_conditional_path_display(path, {
+      predicate = require('custom.util').is_test_file,
+      hl_on_true = 'TelescopeResultsDiffAdd',
+    })
+  end,
 }
 
 local custom_actions = {}
@@ -107,9 +138,9 @@ M.setup = function()
       },
     }),
     pickers = {
-      live_grep = fullscreen_setup,
-      grep_string = fullscreen_setup,
-      diagnostics = fullscreen_setup,
+      live_grep = extended(fullscreen_setup, highlight_test_files),
+      grep_string = extended(fullscreen_setup, highlight_test_files),
+      diagnostics = extended(fullscreen_setup, highlight_test_files),
 
       lsp_implementations = lsp_common,
       lsp_definitions = lsp_common,
@@ -117,10 +148,22 @@ M.setup = function()
         path_display = function(_, path)
           local relpath = util.string_remove_prefix(path, vim.fn.getcwd(0) .. '/')
           local tail = require('telescope.utils').path_tail(relpath)
-          local highlights = {
-            { { 0, #relpath - #tail }, #relpath == #path and 'Comment' or 'Conditional' },
-            { { #relpath - #tail, #relpath }, #relpath == #path and 'Comment' or '@comment.note' },
-          }
+          local highlights = nil
+
+          if #relpath == #path then
+            highlights = { { { 0, #path }, 'Comment' } }
+          elseif require('custom.util').is_test_file(path) then
+            highlights = {
+              { { 0, #relpath - #tail }, 'Conditional' },
+              { { #relpath - #tail, #relpath }, 'TelescopeResultsDiffAdd' },
+            }
+          else
+            highlights = {
+              { { 0, #relpath - #tail }, 'Conditional' },
+              { { #relpath - #tail, #relpath }, '@comment.note' },
+            }
+          end
+
           return relpath, highlights
         end,
       }),

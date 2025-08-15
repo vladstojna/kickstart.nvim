@@ -126,6 +126,21 @@ return {
           wrap = true,
         },
       },
+      formatters = {
+        filename_tail = function(ctx)
+          return {
+            text = vim.fn.fnamemodify(ctx.item.filename, ':t'),
+            hl = 'TroubleFilename',
+          }
+        end,
+        dirname_no_empty = function(ctx)
+          local dirname = vim.fn.fnamemodify(ctx.item.filename, ':p:~:.:h')
+          return {
+            text = dirname == '.' and './' or dirname,
+            hl = 'TroubleSource',
+          }
+        end,
+      },
     },
     keys = {
       {
@@ -163,7 +178,63 @@ return {
         end,
         desc = 'Trouble: qflist',
       },
+      {
+        '<leader>xj',
+        function()
+          local trouble = require 'trouble.api'
+
+          local has_autocmd = function()
+            return #vim.api.nvim_get_autocmds {
+              group = 'custom.trouble.jumplist',
+              event = { 'BufEnter', 'CursorMoved' },
+            } > 0
+          end
+
+          local create_autocmd = function()
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'BufEnter' }, {
+              group = 'custom.trouble.jumplist',
+              callback = function()
+                if package.loaded['trouble'] and trouble.is_open { mode = 'loclist' } then
+                  require('custom.util').replace_loclist_with_jumplist()
+                  trouble.refresh 'loclist'
+                end
+              end,
+            })
+          end
+
+          local clear_autocmds = function()
+            vim.api.nvim_clear_autocmds {
+              group = 'custom.trouble.jumplist',
+              event = { 'BufEnter', 'CursorMoved' },
+            }
+            assert(not has_autocmd(), 'Autocmd should have been deleted')
+          end
+
+          if not has_autocmd() then
+            create_autocmd()
+          elseif trouble.is_open { mode = 'loclist' } then
+            clear_autocmds()
+          end
+
+          require('custom.util').replace_loclist_with_jumplist()
+          require('trouble').toggle {
+            mode = 'loclist',
+            sort = {},
+            groups = {},
+            auto_preview = false,
+            auto_refresh = false,
+            warn_no_results = false,
+            open_no_results = true,
+            format = '{file_icon} {filename_tail} {dirname_no_empty}: {text:ts} {pos}',
+          }
+        end,
+        desc = 'Trouble: jumplist',
+      },
     },
+    config = function(_, opts)
+      vim.api.nvim_create_augroup('custom.trouble.jumplist', { clear = true })
+      require('trouble').setup(opts)
+    end,
   },
   {
     'rcarriga/nvim-notify',

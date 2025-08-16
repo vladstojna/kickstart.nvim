@@ -6,7 +6,6 @@
 return {
   'nvim-treesitter/playground',
   'RRethy/vim-illuminate',
-  'famiu/bufdelete.nvim',
   'tpope/vim-repeat',
   'tpope/vim-unimpaired',
   'tpope/vim-rsi',
@@ -16,6 +15,21 @@ return {
   'lambdalisue/suda.vim',
   'stevearc/dressing.nvim',
   'pearofducks/ansible-vim',
+  {
+    'famiu/bufdelete.nvim',
+    keys = {
+      {
+        '<leader>bd',
+        '<cmd>Bdelete<CR>',
+        desc = 'Unload buffer',
+      },
+      {
+        '<leader>bD',
+        '<cmd>Bdelete!<CR>',
+        desc = 'Unload buffer (force)',
+      },
+    },
+  },
   {
     'nvim-treesitter/nvim-treesitter-context',
     opts = {
@@ -218,6 +232,8 @@ return {
   },
   {
     'stevearc/oil.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    lazy = false,
     opts = {
       delete_to_trash = true,
       view_options = {
@@ -240,7 +256,19 @@ return {
         wrap = true,
       },
     },
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function(_, opts)
+      require('oil').setup(opts)
+      vim.keymap.set('n', '<leader>e', function()
+        require('oil').open_float()
+      end, {
+        desc = 'Oil: [E]xplore directory of active buffer',
+      })
+      vim.keymap.set('n', '<leader>E', function()
+        require('oil').open_float(vim.fn.getcwd())
+      end, {
+        desc = 'Oil: [E]xplore CWD',
+      })
+    end,
   },
   {
     'laytan/cloak.nvim',
@@ -293,8 +321,34 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
     },
+    keys = {
+      {
+        '<leader>Rr',
+        function()
+          require('telescope').extensions.refactoring.refactors()
+        end,
+        mode = { 'n', 'x' },
+        desc = 'Refactoring: show refactors',
+      },
+      {
+        '<leader>Rp',
+        function()
+          require('refactoring').debug.print_var()
+        end,
+        mode = { 'n', 'x' },
+        desc = 'Refactoring: print variable',
+      },
+      {
+        '<leader>Rx',
+        function()
+          require('refactoring').debug.cleanup()
+        end,
+        desc = 'Refactoring: cleanup',
+      },
+    },
     config = function()
       require('refactoring').setup()
+      require('telescope').load_extension 'refactoring'
     end,
   },
   {
@@ -310,6 +364,15 @@ return {
         wo = {
           fillchars = 'eob: ',
         },
+      },
+    },
+    keys = {
+      {
+        '<leader>cc',
+        function()
+          require('no-neck-pain').toggle()
+        end,
+        desc = 'Toggle centered view',
       },
     },
     config = function(_, opts)

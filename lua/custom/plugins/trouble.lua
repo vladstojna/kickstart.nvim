@@ -37,6 +37,7 @@ return {
     keys = {
       ['<c-j>'] = 'next',
       ['<c-k>'] = 'prev',
+      ['<tab>'] = 'fold_toggle',
     },
     modes = {
       diagnostics = {

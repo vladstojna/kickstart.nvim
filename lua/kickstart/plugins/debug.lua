@@ -6,6 +6,20 @@
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
 
+local function set_breakpoint(prompt, setter)
+  vim.ui.input({ prompt = prompt }, function(input)
+    if input == nil then
+      vim.notify('No input provided', vim.log.levels.WARN)
+    else
+      input = string.gsub(input, '%s+', '')
+      if input == '' then
+        vim.notify('Setting standard breakpoint', vim.log.levels.INFO)
+      end
+      setter(input)
+    end
+  end)
+end
+
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
@@ -67,14 +81,14 @@ return {
     {
       '<leader>bB',
       function()
-        require('custom.dap.persistent_breakpoints').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+        set_breakpoint('Condition: ', require('custom.dap.persistent_breakpoints').set_breakpoint)
       end,
       desc = 'Debug: Set Breakpoint',
     },
     {
       '<leader>bl',
       function()
-        require('custom.dap.persistent_breakpoints').set_log_point(vim.fn.input 'Log message: ')
+        set_breakpoint('Log message: ', require('custom.dap.persistent_breakpoints').set_log_point)
       end,
       desc = 'Debug: Set log point',
     },

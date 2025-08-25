@@ -52,6 +52,13 @@ return {
       require('auto-session').setup {
         log_level = 'error',
         git_use_branch_name = true,
+        pre_save_cmds = {
+          function()
+            --- Close DAP UI tab before saving session so that the tab isn't
+            --- persisted in the session file
+            require('custom.dap.ui.tab').close()
+          end,
+        },
       }
       vim.keymap.set('n', '<leader>S', require('auto-session.session-lens').search_session, {
         noremap = true,

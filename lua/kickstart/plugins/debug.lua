@@ -122,6 +122,27 @@ return {
       end,
       desc = 'Debug: Run last session',
     },
+    {
+      '<leader>Dc',
+      function()
+        require('dapui').float_element('console', { enter = false })
+      end,
+      desc = 'Debug: Show console',
+    },
+    {
+      '<leader>Db',
+      function()
+        require('dapui').float_element('breakpoints', { enter = true })
+      end,
+      desc = 'Debug: Show breakpoints',
+    },
+    {
+      '<leader>Dw',
+      function()
+        require('dapui').float_element('watches', { enter = true })
+      end,
+      desc = 'Debug: Show watches',
+    },
   },
   config = function()
     local dap = require 'dap'
@@ -146,13 +167,31 @@ return {
 
     local telescope = require 'telescope'
     telescope.load_extension 'dap'
-    vim.keymap.set('n', '<leader>sb', telescope.extensions.dap.list_breakpoints, { desc = 'Debug: [S]earch [B]reakpoints' })
-    vim.keymap.set('n', '<leader>sv', telescope.extensions.dap.variables, { desc = 'Debug: [S]earch [V]ariables' })
-    vim.keymap.set('n', '<leader>sF', telescope.extensions.dap.frames, { desc = 'Debug: [S]earch [F]rames' })
+
+    vim.keymap.set('n', '<leader>sb', function()
+      telescope.extensions.dap.list_breakpoints {
+        preview = { hide_on_startup = false },
+        show_line = false,
+        path_display = function(_, path)
+          local relpath = require('custom.util').string_remove_prefix(path, vim.fn.getcwd(0) .. '/')
+          local tail = require('telescope.utils').path_tail(relpath)
+          local highlights = {
+            { { 0, #relpath - #tail }, 'Conditional' },
+            { { #relpath - #tail, #relpath }, '@comment.note' },
+          }
+
+          return relpath, highlights
+        end,
+      }
+    end, { desc = 'Debug: [S]earch [B]reakpoints' })
+
+    vim.keymap.set('n', '<leader>sF', function()
+      telescope.extensions.dap.frames { preview = { hide_on_startup = false } }
+    end, { desc = 'Debug: [S]earch [F]rames' })
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
-    dapui.setup(require 'custom.dap.ui.layout')
+    dapui.setup(vim.tbl_extend('error', { mappings = { expand = { 'z', '<Tab>' } } }, require 'custom.dap.ui.layout'))
 
     -- Change breakpoint icons
     vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })

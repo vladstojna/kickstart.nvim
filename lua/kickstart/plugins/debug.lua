@@ -115,6 +115,13 @@ return {
       end,
       desc = 'Debug: See last session result.',
     },
+    {
+      '<F8>',
+      function()
+        require('custom.dap.run_last').run_last()
+      end,
+      desc = 'Debug: Run last session',
+    },
   },
   config = function()
     local dap = require 'dap'
@@ -160,6 +167,7 @@ return {
     end
 
     dap.listeners.after.event_initialized['dapui_config'] = require('custom.dap.ui.tab').open
+    dap.listeners.after.event_initialized['store_config'] = require('custom.dap.run_last').save_config
     dap.listeners.before.event_terminated['dapui_config'] = require('custom.dap.ui.tab').close
     dap.listeners.before.event_exited['dapui_config'] = require('custom.dap.ui.tab').close
 

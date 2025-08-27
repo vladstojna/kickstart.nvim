@@ -4,6 +4,8 @@ local act_layout = require 'telescope.actions.layout'
 local act_state = require 'telescope.actions.state'
 local util = require 'custom.util'
 
+local test_file_hl = 'DiagnosticUnderlineHint'
+
 local function yank_absolute_path(register)
   local entry = act_state.get_selected_entry()
 
@@ -90,7 +92,7 @@ local highlight_test_files = {
   path_display = function(_, path)
     return get_conditional_path_display(path, {
       predicate = require('custom.util').is_test_file,
-      hl_on_true = 'TelescopeResultsDiffAdd',
+      hl_on_true = test_file_hl,
     })
   end,
 }
@@ -155,7 +157,7 @@ M.setup = function()
           elseif require('custom.util').is_test_file(path) then
             highlights = {
               { { 0, #relpath - #tail }, 'Conditional' },
-              { { #relpath - #tail, #relpath }, 'TelescopeResultsDiffAdd' },
+              { { #relpath - #tail, #relpath }, test_file_hl },
             }
           else
             highlights = {

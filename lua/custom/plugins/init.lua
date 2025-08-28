@@ -286,9 +286,6 @@ return {
     opts = {
       width = 120,
       minSideBufferWidth = 1, -- always enable side buffers
-      autocmds = {
-        skipEnteringNoNeckPainBuffer = true,
-      },
       buffers = {
         wo = {
           fillchars = 'eob: ',
@@ -297,17 +294,13 @@ return {
     },
     keys = {
       {
-        '<leader>cc',
+        '<leader>z',
         function()
           require('no-neck-pain').toggle()
         end,
         desc = 'Toggle centered view',
       },
     },
-    config = function(_, opts)
-      require('no-neck-pain').setup(opts)
-      vim.o.laststatus = 3
-    end,
   },
   {
     'Badhi/nvim-treesitter-cpp-tools',

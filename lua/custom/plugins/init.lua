@@ -111,12 +111,12 @@ return {
     'rmagatti/goto-preview',
     config = function()
       require('goto-preview').setup {
-        width = 100, -- Width of the floating window
-        height = 20, -- Height of the floating window
-        default_mappings = true, -- Bind default mappings
-        debug = false, -- Print debug information
-        opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        width = require('custom.layout').goto_preview.width,
+        height = require('custom.layout').goto_preview.height,
+        default_mappings = true,
+        debug = false,
+        opacity = 10,
+        post_open_hook = nil,
       }
     end,
   },
@@ -175,11 +175,11 @@ return {
         end,
       },
       float = {
-        padding = 2,
-        max_width = 100,
-        max_height = 0,
+        padding = 4,
+        max_width = require('custom.layout').oil.float_max_width,
+        preview_split = 'below',
         win_options = {
-          winblend = 0,
+          winblend = 10,
         },
       },
       win_options = {
@@ -286,7 +286,7 @@ return {
     'shortcuts/no-neck-pain.nvim',
     version = '*',
     opts = {
-      width = 120,
+      width = require('custom.layout').no_neck_pain.width,
       minSideBufferWidth = 1, -- always enable side buffers
       buffers = {
         wo = {

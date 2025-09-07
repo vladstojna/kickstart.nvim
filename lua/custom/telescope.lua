@@ -28,7 +28,7 @@ end
 local fullscreen_setup_common = {
   prompt_position = 'top',
   width = function(_, cols, _)
-    return math.min(math.floor(cols * 0.95), 200)
+    return math.min(math.floor(cols * 0.95), require('custom.layout').telescope.fullscreen.min_width)
   end,
   height = function(_, _, rows)
     return math.floor(rows * 0.95)
@@ -44,7 +44,7 @@ local standard_setup = {
       mirror = true,
       prompt_position = 'top',
       width = function(_, cols, _)
-        return math.min(math.floor(cols * 0.9), 120)
+        return math.min(math.floor(cols * 0.9), require('custom.layout').telescope.standard.min_width)
       end,
       height = function(_, _, rows)
         return math.floor(rows * 0.8)
@@ -59,7 +59,7 @@ local fullscreen_setup = {
   preview = { hide_on_startup = false },
   layout_strategy = 'flex',
   layout_config = {
-    flex = { flip_columns = 100 },
+    flex = { flip_columns = require('custom.layout').telescope.fullscreen.flex_flip_columns },
     horizontal = vim.tbl_extend('error', fullscreen_setup_common, { mirror = false, preview_width = 0.5 }),
     vertical = vim.tbl_extend('error', fullscreen_setup_common, { mirror = true, preview_height = 0.5 }),
   },

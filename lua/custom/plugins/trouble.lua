@@ -35,8 +35,8 @@ return {
     use_diagnostic_signs = true,
     auto_preview = true,
     keys = {
-      ['<c-j>'] = 'next',
-      ['<c-k>'] = 'prev',
+      ['<c-f>'] = 'next',
+      ['<c-g>'] = 'prev',
       ['<tab>'] = 'fold_toggle',
     },
     modes = {

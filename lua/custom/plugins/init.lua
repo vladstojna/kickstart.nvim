@@ -436,6 +436,11 @@ return {
         desc = 'Neogit: diff',
       },
     },
+    config = function()
+      require('neogit').setup {
+        graph_style = require('custom.util').neogit_graph_style(),
+      }
+    end,
   },
   { 'akinsho/git-conflict.nvim', version = '*', config = true, opts = { disable_diagnostics = true } },
   {

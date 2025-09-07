@@ -59,4 +59,24 @@ M.is_test_file = function(path)
   return is_test_file
 end
 
+M.neogit_graph_style = function()
+  local function supports_kitty_graphics_protocol()
+    -- INFO: there is likely a better way of checking this by sending a display
+    -- request and checking its response according to Kitty docs, but I could not
+    -- get it to work
+    local terminals = {
+      ['xterm-ghostty'] = true,
+    }
+    return vim.env.TERM and terminals[vim.env.TERM]
+  end
+
+  if supports_kitty_graphics_protocol() then
+    return 'kitty'
+  elseif vim.g.have_nerd_font then
+    return 'unicode'
+  else
+    return 'ascii'
+  end
+end
+
 return M

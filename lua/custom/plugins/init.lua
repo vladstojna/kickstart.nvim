@@ -470,4 +470,22 @@ return {
       }
     end,
   },
+  {
+    'yorickpeterse/nvim-pqf',
+    config = function()
+      require('pqf').setup {
+        signs = vim.g.have_nerd_font and {
+          error = { text = '󰅚 ', hl = 'DiagnosticSignError' },
+          warning = { text = '󰀪 ', hl = 'DiagnosticSignWarn' },
+          info = { text = '󰋽 ', hl = 'DiagnosticSignInfo' },
+          hint = { text = '󰌶 ', hl = 'DiagnosticSignHint' },
+        } or {
+          error = { text = 'E', hl = 'DiagnosticSignError' },
+          warning = { text = 'W', hl = 'DiagnosticSignWarn' },
+          info = { text = 'I', hl = 'DiagnosticSignInfo' },
+          hint = { text = 'H', hl = 'DiagnosticSignHint' },
+        },
+      }
+    end,
+  },
 }

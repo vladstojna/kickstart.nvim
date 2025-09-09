@@ -176,8 +176,8 @@ return {
           local relpath = require('custom.util').string_remove_prefix(path, vim.fn.getcwd(0) .. '/')
           local tail = require('telescope.utils').path_tail(relpath)
           local highlights = {
-            { { 0, #relpath - #tail }, 'Conditional' },
-            { { #relpath - #tail, #relpath }, '@comment.note' },
+            { { 0, #relpath - #tail }, 'Conceal' },
+            { { #relpath - #tail, #relpath }, 'Boolean' },
           }
 
           return relpath, highlights

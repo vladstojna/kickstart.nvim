@@ -4,7 +4,7 @@ local act_layout = require 'telescope.actions.layout'
 local act_state = require 'telescope.actions.state'
 local util = require 'custom.util'
 
-local test_file_hl = 'DiagnosticUnderlineHint'
+local test_file_hl = 'String'
 
 local function yank_absolute_path(register)
   local entry = act_state.get_selected_entry()
@@ -73,14 +73,16 @@ local fullscreen_setup = {
 local function get_conditional_path_display(path, opts)
   local relpath = util.string_remove_prefix(path, vim.fn.getcwd(0) .. '/')
   local tail = require('telescope.utils').path_tail(relpath)
+
   local dirname = vim.fn.fnamemodify(relpath, ':h')
+  dirname = dirname == '.' and './' or dirname
+
+  local separator = ' · '
   local highlights = {
-    { { #tail + 1, #tail + 1 + #dirname }, 'Comment' },
+    { { #tail + #separator, #tail + #separator + #dirname }, 'Conceal' },
   }
-  if opts.predicate(path) then
-    table.insert(highlights, { { 0, #tail }, opts.hl_on_true })
-  end
-  return tail .. ' ' .. dirname, highlights
+  table.insert(highlights, { { 0, #tail }, opts.hl(opts.predicate(path)) })
+  return tail .. separator .. dirname, highlights
 end
 
 local lsp_common = {
@@ -92,7 +94,11 @@ local highlight_test_files = {
   path_display = function(_, path)
     return get_conditional_path_display(path, {
       predicate = require('custom.util').is_test_file,
-      hl_on_true = test_file_hl,
+      --- Highlight function in function of predicate result
+      ---@param is_test_file boolean
+      hl = function(is_test_file)
+        return is_test_file == true and test_file_hl or 'Boolean'
+      end,
     })
   end,
 }
@@ -153,16 +159,16 @@ M.setup = function()
           local highlights = nil
 
           if #relpath == #path then
-            highlights = { { { 0, #path }, 'Comment' } }
+            highlights = { { { 0, #path }, 'Conceal' } }
           elseif require('custom.util').is_test_file(path) then
             highlights = {
-              { { 0, #relpath - #tail }, 'Conditional' },
+              { { 0, #relpath - #tail }, 'Conceal' },
               { { #relpath - #tail, #relpath }, test_file_hl },
             }
           else
             highlights = {
-              { { 0, #relpath - #tail }, 'Conditional' },
-              { { #relpath - #tail, #relpath }, '@comment.note' },
+              { { 0, #relpath - #tail }, 'Conceal' },
+              { { #relpath - #tail, #relpath }, 'Boolean' },
             }
           end
 

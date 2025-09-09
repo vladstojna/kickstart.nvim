@@ -451,4 +451,23 @@ return {
       })
     end,
   },
+  {
+    'andythigpen/nvim-coverage',
+    version = '*',
+    cmd = {
+      'Coverage',
+      'CoverageLoad',
+      'CoverageLoadLcov',
+      'CoverageShow',
+      'CoverageHide',
+      'CoverageToggle',
+      'CoverageClear',
+      'CoverageSummary',
+    },
+    config = function()
+      require('coverage').setup {
+        auto_reload = true,
+      }
+    end,
+  },
 }

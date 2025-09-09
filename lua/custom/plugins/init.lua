@@ -56,7 +56,9 @@ return {
           function()
             --- Close DAP UI tab before saving session so that the tab isn't
             --- persisted in the session file
-            require('custom.dap.ui.tab').close()
+            if package.loaded['dap'] and package.loaded['dapui'] then
+              require('custom.dap.ui.tab').close()
+            end
           end,
         },
       }

@@ -10,16 +10,17 @@ local function executable_input()
   return (path and path ~= '') and path or dap.ABORT
 end
 
-local function gdbserver_attach(tab, adapter_name, libs_type)
-  table.insert(tab, {
-    name = 'Attach to gdbserver (' .. libs_type .. ')',
-    type = adapter_name,
+--- Return configuration for connecting to gdbserver
+---@param adapter string
+---@return table
+local function gdbserver_connect(adapter)
+  local tbl = {
+    name = 'Attach to gdbserver',
+    type = adapter,
     request = 'attach',
-    target = function()
-      return vim.fn.input { prompt = 'Target: ', default = ':2345' }
-    end,
     cwd = '${workspaceFolder}',
-  })
+  }
+  return tbl
 end
 
 local launch = function(adapter)
@@ -82,7 +83,6 @@ for _, what in ipairs { launch, launch_with_args, attach } do
   table.insert(M, what 'lldb')
 end
 
-gdbserver_attach(M, 'gdb_localsysroot', 'local libs')
-gdbserver_attach(M, 'gdb', 'remote libs')
+table.insert(M, gdbserver_connect 'gdbserver')
 
 return M

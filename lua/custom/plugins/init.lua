@@ -4,7 +4,6 @@
 -- See the kickstart.nvim README for more information
 
 return {
-  'nvim-treesitter/playground',
   'RRethy/vim-illuminate',
   'tpope/vim-repeat',
   'tpope/vim-unimpaired',
@@ -14,7 +13,10 @@ return {
   'rhysd/git-messenger.vim',
   'lambdalisue/suda.vim',
   'stevearc/dressing.nvim',
-  'pearofducks/ansible-vim',
+  {
+    'pearofducks/ansible-vim',
+    ft = 'yaml.ansible',
+  },
   {
     'famiu/bufdelete.nvim',
     keys = {
@@ -139,14 +141,16 @@ return {
   {
     'danymat/neogen',
     dependencies = 'nvim-treesitter/nvim-treesitter',
-    config = function()
-      local ng = require 'neogen'
-      ng.setup {}
-
-      vim.keymap.set('n', '<leader>ng', function()
-        ng.generate { type = 'any' }
-      end, { noremap = true, silent = true, desc = '[N]eogen [G]enerate' })
-    end,
+    keys = {
+      {
+        '<leader>ng',
+        function()
+          require('neogen').generate { type = 'any' }
+        end,
+        desc = '[N]eogen [G]enerate',
+      },
+    },
+    config = true,
   },
   {
     'j-hui/fidget.nvim',
@@ -229,6 +233,7 @@ return {
   },
   {
     'lervag/vimtex',
+    ft = 'tex',
     config = function()
       local function get_editor(sys)
         local editor
@@ -331,7 +336,7 @@ return {
   },
   {
     'p00f/clangd_extensions.nvim',
-    event = 'LspAttach',
+    ft = 'cpp', -- Assume presence of clangd
     opts = {
       memory_usage = {
         border = 'single',
@@ -341,13 +346,10 @@ return {
       },
     },
     config = function(opts)
-      local clients = vim.lsp.get_clients { name = 'clangd' }
-      if #clients >= 1 and clients[1].name == 'clangd' then
-        require('clangd_extensions').setup(opts)
-        vim.keymap.set('n', '<leader>ls', vim.cmd.ClangdShowSymbolInfo, { desc = 'Clangd: Show symbol info' })
-        vim.keymap.set('n', '<leader>lh', vim.cmd.ClangdSwitchSourceHeader, { desc = 'Clangd: Switch between source and header' })
-        vim.keymap.set('n', '<leader>lt', vim.cmd.ClangdTypeHierarchy, { desc = 'Clangd: Show type hierarchy' })
-      end
+      require('clangd_extensions').setup(opts)
+      vim.keymap.set('n', '<leader>ls', vim.cmd.ClangdShowSymbolInfo, { desc = 'Clangd: Show symbol info' })
+      vim.keymap.set('n', '<leader>lh', vim.cmd.ClangdSwitchSourceHeader, { desc = 'Clangd: Switch between source and header' })
+      vim.keymap.set('n', '<leader>lt', vim.cmd.ClangdTypeHierarchy, { desc = 'Clangd: Show type hierarchy' })
     end,
   },
   {

@@ -3,7 +3,7 @@ local dapui = require 'dapui'
 local ui_data = {
   win = nil,
   tab = nil,
-  tabnr = nil,
+  came_from_tab = nil,
 }
 
 --- Open DAP UI in new tab
@@ -15,11 +15,11 @@ local function open_in_tab(opts)
   end
 
   local curr_win = vim.api.nvim_get_current_win()
+  ui_data.came_from_tab = vim.api.nvim_win_get_tabpage(curr_win)
 
   vim.cmd 'tabedit %'
   ui_data.win = vim.fn.win_getid()
   ui_data.tab = vim.api.nvim_win_get_tabpage(ui_data.win)
-  ui_data.tabnr = vim.api.nvim_tabpage_get_number(ui_data.tab)
 
   vim.api.nvim_win_set_cursor(ui_data.win, vim.api.nvim_win_get_cursor(curr_win))
 
@@ -31,13 +31,16 @@ end
 local function close_tab(opts)
   dapui.close(opts)
 
+  if ui_data.came_from_tab and vim.api.nvim_tabpage_is_valid(ui_data.came_from_tab) then
+    vim.api.nvim_set_current_tabpage(ui_data.came_from_tab)
+  end
   if ui_data.tab and vim.api.nvim_tabpage_is_valid(ui_data.tab) then
-    vim.cmd { cmd = 'tabclose', args = { ui_data.tabnr } }
+    vim.cmd { cmd = 'tabclose', args = { vim.api.nvim_tabpage_get_number(ui_data.tab) } }
   end
 
   ui_data.win = nil
   ui_data.tab = nil
-  ui_data.tabnr = nil
+  ui_data.came_from_tab = nil
 end
 
 --- Toggle DAP UI Tab

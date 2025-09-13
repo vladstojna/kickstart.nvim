@@ -205,10 +205,21 @@ return {
       vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
     end
 
+    --- Set all termination events to make sure they work with any debug adapter
+    ---@param id string
+    ---@param action function
+    local function set_termination_events(id, action)
+      dap.listeners.before.event_terminated[id] = action
+      dap.listeners.before.event_exited[id] = action
+      dap.listeners.before.disconnect[id] = action
+    end
+
     dap.listeners.after.event_initialized['dapui_config'] = require('custom.dap.ui.tab').open
     dap.listeners.after.event_initialized['store_config'] = require('custom.dap.run_last').save_config
-    dap.listeners.before.event_terminated['dapui_config'] = require('custom.dap.ui.tab').close
-    dap.listeners.before.event_exited['dapui_config'] = require('custom.dap.ui.tab').close
+    dap.listeners.after.event_initialized['custom_dap_util'] = require('custom.dap.util').set_keymaps
+
+    set_termination_events('custom_dap_util', require('custom.dap.util').unset_keymaps)
+    set_termination_events('dapui_config', require('custom.dap.ui.tab').close)
 
     -- Install golang specific config
     require('dap-go').setup {

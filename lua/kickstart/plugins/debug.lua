@@ -218,7 +218,6 @@ return {
     dap.listeners.after.event_initialized['store_config'] = require('custom.dap.run_last').save_config
     dap.listeners.after.event_initialized['custom_dap_util'] = require('custom.dap.util').set_keymaps
 
-    set_termination_events('custom_dap_util', require('custom.dap.util').unset_keymaps)
     set_termination_events('dapui_config', require('custom.dap.ui.tab').close)
 
     -- Install golang specific config

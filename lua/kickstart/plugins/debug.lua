@@ -101,6 +101,13 @@ return {
       desc = 'Debug: Clear Breakpoints',
     },
     {
+      '<F4>',
+      function()
+        require('dap').run_to_cursor()
+      end,
+      desc = 'Debug: Continue to cursor position',
+    },
+    {
       '<F6>',
       function()
         require('dap').terminate()

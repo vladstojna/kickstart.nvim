@@ -10,9 +10,23 @@ return {
     'MunifTanjim/nui.nvim',
   },
   keys = {
-    { '\\', ':Neotree reveal position=float<CR>', desc = 'NeoTree reveal', silent = true },
+    {
+      '\\',
+      function()
+        require('neo-tree.command').execute { position = 'current' }
+      end,
+      desc = 'Open NeoTree',
+    },
   },
   opts = {
+    event_handlers = {
+      {
+        event = 'neo_tree_buffer_enter',
+        handler = function(_)
+          vim.cmd [[ setlocal relativenumber ]]
+        end,
+      },
+    },
     filesystem = {
       hijack_netrw_behavior = 'disabled',
       window = {

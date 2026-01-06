@@ -73,7 +73,7 @@ return {
           end,
         },
       }
-      vim.keymap.set('n', '<leader>S', require('auto-session.session-lens').search_session, {
+      vim.keymap.set('n', '<leader>S', require('auto-session.pickers').open_session_picker, {
         noremap = true,
         desc = 'List saved sessions',
       })

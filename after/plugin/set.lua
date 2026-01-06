@@ -14,9 +14,6 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 8
 vim.opt.isfname:append '@-@'
 
-vim.opt.cmdheight = 0
-vim.opt.laststatus = 2
-
 -- for now, set winborder if nvim is >0.11
 -- check if it gets annoying with plugins having double borders
 local version = vim.version()

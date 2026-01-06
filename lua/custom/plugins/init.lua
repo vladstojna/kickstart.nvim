@@ -9,10 +9,19 @@ return {
   'tpope/vim-unimpaired',
   'tpope/vim-rsi',
   'JoosepAlviste/nvim-ts-context-commentstring',
-  'sindrets/diffview.nvim',
   'rhysd/git-messenger.vim',
   'lambdalisue/suda.vim',
   'stevearc/dressing.nvim',
+  {
+    'sindrets/diffview.nvim',
+    opts = {
+      hooks = {
+        diff_buf_read = function(_)
+          vim.opt_local.wrap = false
+        end,
+      },
+    },
+  },
   {
     'pearofducks/ansible-vim',
     ft = 'yaml.ansible',

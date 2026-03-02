@@ -3,6 +3,8 @@
 --
 -- See the kickstart.nvim README for more information
 
+---@module 'lazy'
+---@type LazySpec
 return {
   'RRethy/vim-illuminate',
   'tpope/vim-repeat',
@@ -16,9 +18,7 @@ return {
     'sindrets/diffview.nvim',
     opts = {
       hooks = {
-        diff_buf_read = function(_)
-          vim.opt_local.wrap = false
-        end,
+        diff_buf_read = function(_) vim.opt_local.wrap = false end,
       },
     },
   },
@@ -67,9 +67,7 @@ return {
           function()
             --- Close DAP UI tab before saving session so that the tab isn't
             --- persisted in the session file
-            if package.loaded['dap'] and package.loaded['dapui'] then
-              require('custom.dap.ui.tab').close()
-            end
+            if package.loaded['dap'] and package.loaded['dapui'] then require('custom.dap.ui.tab').close() end
           end,
         },
       }
@@ -84,25 +82,19 @@ return {
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
     },
-    config = function()
-      require('nvim-ts-autotag').setup()
-    end,
+    config = function() require('nvim-ts-autotag').setup() end,
   },
   {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime',
-    config = function()
-      vim.g.startuptime_tries = 10
-    end,
+    config = function() vim.g.startuptime_tries = 10 end,
   },
   {
     'windwp/nvim-spectre',
     keys = {
       {
         '<leader>sR',
-        function()
-          require('spectre').open()
-        end,
+        function() require('spectre').open() end,
         desc = '[R]eplace in files (Spectre)',
       },
     },
@@ -143,9 +135,7 @@ return {
   {
     'ray-x/lsp_signature.nvim',
     event = 'BufRead',
-    config = function()
-      require('lsp_signature').on_attach()
-    end,
+    config = function() require('lsp_signature').on_attach() end,
   },
   {
     'danymat/neogen',
@@ -153,9 +143,7 @@ return {
     keys = {
       {
         '<leader>ng',
-        function()
-          require('neogen').generate { type = 'any' }
-        end,
+        function() require('neogen').generate { type = 'any' } end,
         desc = '[N]eogen [G]enerate',
       },
     },
@@ -183,9 +171,7 @@ return {
       view_options = {
         show_hidden = true,
         natural_order = true,
-        is_always_hidden = function(name, _)
-          return name == '..' or name == '.git'
-        end,
+        is_always_hidden = function(name, _) return name == '..' or name == '.git' end,
       },
       float = {
         padding = 4,
@@ -202,14 +188,10 @@ return {
     },
     config = function(_, opts)
       require('oil').setup(opts)
-      vim.keymap.set('n', '<leader>e', function()
-        require('oil').open_float()
-      end, {
+      vim.keymap.set('n', '<leader>e', function() require('oil').open_float() end, {
         desc = 'Oil: [E]xplore directory of active buffer',
       })
-      vim.keymap.set('n', '<leader>E', function()
-        require('oil').open_float(vim.fn.getcwd())
-      end, {
+      vim.keymap.set('n', '<leader>E', function() require('oil').open_float(vim.fn.getcwd()) end, {
         desc = 'Oil: [E]xplore CWD',
       })
     end,
@@ -269,25 +251,19 @@ return {
     keys = {
       {
         '<leader>Rr',
-        function()
-          require('telescope').extensions.refactoring.refactors()
-        end,
+        function() require('telescope').extensions.refactoring.refactors() end,
         mode = { 'n', 'x' },
         desc = 'Refactoring: show refactors',
       },
       {
         '<leader>Rp',
-        function()
-          require('refactoring').debug.print_var()
-        end,
+        function() require('refactoring').debug.print_var() end,
         mode = { 'n', 'x' },
         desc = 'Refactoring: print variable',
       },
       {
         '<leader>Rx',
-        function()
-          require('refactoring').debug.cleanup()
-        end,
+        function() require('refactoring').debug.cleanup() end,
         desc = 'Refactoring: cleanup',
       },
     },
@@ -311,9 +287,7 @@ return {
     keys = {
       {
         '<leader>z',
-        function()
-          require('no-neck-pain').toggle()
-        end,
+        function() require('no-neck-pain').toggle() end,
         desc = 'Toggle centered view',
       },
     },
@@ -461,7 +435,7 @@ return {
     },
     config = function()
       require('neoclip').setup()
-      vim.keymap.set('n', '<leader>sc', require('telescope').extensions.neoclip.default, {
+      vim.keymap.set('n', '<leader>sC', require('telescope').extensions.neoclip.default, {
         noremap = true,
         desc = '[S]earch [C]lipboard history',
       })

@@ -21,18 +21,12 @@ local function yank_relative_path(register)
   vim.notify('Copied ' .. relative_path, vim.log.levels.INFO)
 end
 
-local function extended(lhs, rhs)
-  return vim.tbl_extend('error', lhs, rhs)
-end
+local function extended(lhs, rhs) return vim.tbl_extend('error', lhs, rhs) end
 
 local fullscreen_setup_common = {
   prompt_position = 'top',
-  width = function(_, cols, _)
-    return math.min(math.floor(cols * 0.95), require('custom.layout').telescope.fullscreen.min_width)
-  end,
-  height = function(_, _, rows)
-    return math.floor(rows * 0.95)
-  end,
+  width = function(_, cols, _) return math.min(math.floor(cols * 0.95), require('custom.layout').telescope.fullscreen.min_width) end,
+  height = function(_, _, rows) return math.floor(rows * 0.95) end,
   preview_cutoff = 10,
 }
 
@@ -43,12 +37,8 @@ local standard_setup = {
     vertical = {
       mirror = true,
       prompt_position = 'top',
-      width = function(_, cols, _)
-        return math.min(math.floor(cols * 0.9), require('custom.layout').telescope.standard.min_width)
-      end,
-      height = function(_, _, rows)
-        return math.floor(rows * 0.8)
-      end,
+      width = function(_, cols, _) return math.min(math.floor(cols * 0.9), require('custom.layout').telescope.standard.min_width) end,
+      height = function(_, _, rows) return math.floor(rows * 0.8) end,
       preview_cutoff = 10,
       preview_height = 0.4,
     },
@@ -96,9 +86,7 @@ local highlight_test_files = {
       predicate = require('custom.util').is_test_file,
       --- Highlight function in function of predicate result
       ---@param is_test_file boolean
-      hl = function(is_test_file)
-        return is_test_file == true and test_file_hl or 'Boolean'
-      end,
+      hl = function(is_test_file) return is_test_file == true and test_file_hl or 'Boolean' end,
     })
   end,
 }
@@ -121,9 +109,7 @@ custom_actions = require('telescope.actions.mt').transform_mod(custom_actions)
 
 local M = {}
 
-M.fullscreen_spec = function()
-  return fullscreen_setup
-end
+M.fullscreen_spec = function() return fullscreen_setup end
 
 M.setup = function()
   require('telescope').setup {
@@ -184,26 +170,14 @@ M.setup = function()
         },
         mappings = {
           n = {
-            ['ya'] = function()
-              yank_absolute_path()
-            end,
-            ['yy'] = function()
-              yank_relative_path()
-            end,
-            ['<Leader>ya'] = function()
-              yank_absolute_path '+'
-            end,
-            ['<Leader>yy'] = function()
-              yank_relative_path '+'
-            end,
+            ['ya'] = function() yank_absolute_path() end,
+            ['yy'] = function() yank_relative_path() end,
+            ['<Leader>ya'] = function() yank_absolute_path '+' end,
+            ['<Leader>yy'] = function() yank_relative_path '+' end,
           },
           i = {
-            ['<C-y>a'] = function()
-              yank_absolute_path()
-            end,
-            ['<C-y>y'] = function()
-              yank_absolute_path()
-            end,
+            ['<C-y>a'] = function() yank_absolute_path() end,
+            ['<C-y>y'] = function() yank_absolute_path() end,
           },
         },
       },
@@ -213,27 +187,15 @@ M.setup = function()
         mappings = {
           i = {
             ['<c-d>'] = actions.delete_buffer,
-            ['<C-y>a'] = function()
-              yank_absolute_path()
-            end,
-            ['<C-y>y'] = function()
-              yank_absolute_path()
-            end,
+            ['<C-y>a'] = function() yank_absolute_path() end,
+            ['<C-y>y'] = function() yank_absolute_path() end,
           },
           n = {
             ['dd'] = actions.delete_buffer,
-            ['ya'] = function()
-              yank_absolute_path()
-            end,
-            ['yy'] = function()
-              yank_relative_path()
-            end,
-            ['<Leader>ya'] = function()
-              yank_absolute_path '+'
-            end,
-            ['<Leader>yy'] = function()
-              yank_relative_path '+'
-            end,
+            ['ya'] = function() yank_absolute_path() end,
+            ['yy'] = function() yank_relative_path() end,
+            ['<Leader>ya'] = function() yank_absolute_path '+' end,
+            ['<Leader>yy'] = function() yank_relative_path '+' end,
           },
         },
       },
@@ -242,44 +204,60 @@ M.setup = function()
 end
 
 M.keymaps = function()
-  vim.keymap.set('n', '<leader>sa', function()
-    builtin.find_files {
-      hidden = true,
-      no_ignore = true,
-      prompt_title = 'Find Files including hidden & ignored',
-    }
-  end, { desc = '[S]earch [A]ll Files (hidden & ignored)' })
+  vim.keymap.set(
+    'n',
+    '<leader>sa',
+    function()
+      builtin.find_files {
+        hidden = true,
+        no_ignore = true,
+        prompt_title = 'Find Files including hidden & ignored',
+      }
+    end,
+    { desc = '[S]earch [A]ll Files (hidden & ignored)' }
+  )
 
   local utils = require 'telescope.utils'
-  vim.keymap.set('n', '<leader>sG', function()
-    builtin.live_grep {
-      cwd = utils.buffer_dir(),
-      prompt_title = 'Live Grep in Buffer Directory',
-    }
-  end, { desc = '[S]earch by [G]rep in buffer directory' })
+  vim.keymap.set(
+    'n',
+    '<leader>sG',
+    function()
+      builtin.live_grep {
+        cwd = utils.buffer_dir(),
+        prompt_title = 'Live Grep in Buffer Directory',
+      }
+    end,
+    { desc = '[S]earch by [G]rep in buffer directory' }
+  )
 
-  vim.keymap.set('n', '<leader>sW', function()
-    builtin.grep_string {
-      cwd = utils.buffer_dir(),
-    }
-  end, { desc = '[S]earch current [W]ord in buffer directory' })
+  vim.keymap.set(
+    'n',
+    '<leader>sW',
+    function()
+      builtin.grep_string {
+        cwd = utils.buffer_dir(),
+      }
+    end,
+    { desc = '[S]earch current [W]ord in buffer directory' }
+  )
 
   vim.keymap.set('v', '<leader>s', builtin.grep_string, { desc = '[S]earch selection' })
-  vim.keymap.set('v', '<leader>S', function()
-    builtin.grep_string {
-      cwd = utils.buffer_dir(),
-    }
-  end, { desc = '[S]earch selection in buffer directory' })
-
-  vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'List open buffers' })
+  vim.keymap.set(
+    'v',
+    '<leader>S',
+    function()
+      builtin.grep_string {
+        cwd = utils.buffer_dir(),
+      }
+    end,
+    { desc = '[S]earch selection in buffer directory' }
+  )
 end
 
 M.autocmds = function()
   vim.api.nvim_create_autocmd('User', {
     pattern = 'TelescopePreviewerLoaded',
-    callback = function()
-      vim.wo.wrap = true
-    end,
+    callback = function() vim.wo.wrap = true end,
   })
 end
 

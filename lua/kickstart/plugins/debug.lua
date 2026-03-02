@@ -12,14 +12,14 @@ local function set_breakpoint(prompt, setter)
       vim.notify('No input provided', vim.log.levels.WARN)
     else
       input = string.gsub(input, '%s+', '')
-      if input == '' then
-        vim.notify('Setting standard breakpoint', vim.log.levels.INFO)
-      end
+      if input == '' then vim.notify('Setting standard breakpoint', vim.log.levels.INFO) end
       setter(input)
     end
   end)
 end
 
+---@module 'lazy'
+---@type LazySpec
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
@@ -43,53 +43,19 @@ return {
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
-    {
-      '<F5>',
-      function()
-        require('dap').continue()
-      end,
-      desc = 'Debug: Start/Continue',
-    },
-    {
-      '<F1>',
-      function()
-        require('dap').step_into()
-      end,
-      desc = 'Debug: Step Into',
-    },
-    {
-      '<F2>',
-      function()
-        require('dap').step_over()
-      end,
-      desc = 'Debug: Step Over',
-    },
-    {
-      '<F3>',
-      function()
-        require('dap').step_out()
-      end,
-      desc = 'Debug: Step Out',
-    },
-    {
-      '<leader>bb',
-      function()
-        require('custom.dap.persistent_breakpoints').toggle_breakpoint()
-      end,
-      desc = 'Debug: Toggle Breakpoint',
-    },
+    { '<F5>', function() require('dap').continue() end, desc = 'Debug: Start/Continue' },
+    { '<F1>', function() require('dap').step_into() end, desc = 'Debug: Step Into' },
+    { '<F2>', function() require('dap').step_over() end, desc = 'Debug: Step Over' },
+    { '<F3>', function() require('dap').step_out() end, desc = 'Debug: Step Out' },
+    { '<leader>bb', function() require('custom.dap.persistent_breakpoints').toggle_breakpoint() end, desc = 'Debug: Toggle Breakpoint' },
     {
       '<leader>bB',
-      function()
-        set_breakpoint('Condition: ', require('custom.dap.persistent_breakpoints').set_breakpoint)
-      end,
+      function() set_breakpoint('Condition: ', require('custom.dap.persistent_breakpoints').set_breakpoint) end,
       desc = 'Debug: Set Breakpoint',
     },
     {
       '<leader>bl',
-      function()
-        set_breakpoint('Log message: ', require('custom.dap.persistent_breakpoints').set_log_point)
-      end,
+      function() set_breakpoint('Log message: ', require('custom.dap.persistent_breakpoints').set_log_point) end,
       desc = 'Debug: Set log point',
     },
     {
@@ -100,56 +66,14 @@ return {
       end,
       desc = 'Debug: Clear Breakpoints',
     },
-    {
-      '<F4>',
-      function()
-        require('dap').run_to_cursor()
-      end,
-      desc = 'Debug: Continue to cursor position',
-    },
-    {
-      '<F6>',
-      function()
-        require('dap').terminate()
-      end,
-      desc = 'Debug: Terminate session.',
-    },
+    { '<F4>', function() require('dap').run_to_cursor() end, desc = 'Debug: Continue to cursor position' },
+    { '<F6>', function() require('dap').terminate() end, desc = 'Debug: Terminate session.' },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    {
-      '<F7>',
-      function()
-        require('custom.dap.ui.tab').toggle { reset = true }
-      end,
-      desc = 'Debug: See last session result.',
-    },
-    {
-      '<F8>',
-      function()
-        require('custom.dap.run_last').run_last()
-      end,
-      desc = 'Debug: Run last session',
-    },
-    {
-      '<leader>Dc',
-      function()
-        require('dapui').float_element('console', { enter = false })
-      end,
-      desc = 'Debug: Show console',
-    },
-    {
-      '<leader>Db',
-      function()
-        require('dapui').float_element('breakpoints', { enter = true })
-      end,
-      desc = 'Debug: Show breakpoints',
-    },
-    {
-      '<leader>Dw',
-      function()
-        require('dapui').float_element('watches', { enter = true })
-      end,
-      desc = 'Debug: Show watches',
-    },
+    { '<F7>', function() require('custom.dap.ui.tab').toggle { reset = true } end, desc = 'Debug: See last session result.' },
+    { '<F8>', function() require('custom.dap.run_last').run_last() end, desc = 'Debug: Run last session' },
+    { '<leader>Dc', function() require('dapui').float_element('console', { enter = false }) end, desc = 'Debug: Show console' },
+    { '<leader>Db', function() require('dapui').float_element('breakpoints', { enter = true }) end, desc = 'Debug: Show breakpoints' },
+    { '<leader>Dw', function() require('dapui').float_element('watches', { enter = true }) end, desc = 'Debug: Show watches' },
   },
   config = function()
     local dap = require 'dap'
@@ -192,9 +116,12 @@ return {
       }
     end, { desc = 'Debug: [S]earch [B]reakpoints' })
 
-    vim.keymap.set('n', '<leader>sF', function()
-      telescope.extensions.dap.frames { preview = { hide_on_startup = false } }
-    end, { desc = 'Debug: [S]earch [F]rames' })
+    vim.keymap.set(
+      'n',
+      '<leader>sF',
+      function() telescope.extensions.dap.frames { preview = { hide_on_startup = false } } end,
+      { desc = 'Debug: [S]earch [F]rames' }
+    )
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|

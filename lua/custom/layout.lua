@@ -5,9 +5,7 @@
 local function override_if_present(if_not_present, module)
   assert(type(if_not_present) ~= table, 'Type to override must be a table')
   local has_override, override = pcall(require, module)
-  if not has_override or type(override) ~= type(if_not_present) then
-    return if_not_present
-  end
+  if not has_override or type(override) ~= type(if_not_present) then return if_not_present end
 
   return vim.tbl_extend('force', if_not_present, override)
 end

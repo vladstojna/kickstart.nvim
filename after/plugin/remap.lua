@@ -24,12 +24,8 @@ vim.keymap.set('x', '<leader>r', [["hy:%s/<C-r>h/<C-r>h/gI<Left><Left><Left>]], 
 
 vim.keymap.set('n', '<leader>w', vim.cmd.w, { silent = true, noremap = true, desc = 'Save buffer' })
 
-vim.keymap.set('n', '[3', function()
-  vim.diagnostic.jump { count = -1 }
-end, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']3', function()
-  vim.diagnostic.jump { count = 1 }
-end, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '[3', function() vim.diagnostic.jump { count = -1 } end, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']3', function() vim.diagnostic.jump { count = 1 } end, { desc = 'Go to next diagnostic message' })
 
 vim.keymap.set('n', '<leader><Tab>', ':b#<cr>', { silent = true, noremap = true, desc = 'Toggle between last two buffers' })
 vim.keymap.set('n', '<C-Up>', '<C-w>T', { silent = true, noremap = true, desc = 'Breakout window into tab' })
@@ -38,9 +34,12 @@ vim.keymap.set('n', '<C-Left>', 'gT', { silent = true, noremap = true, desc = 'P
 vim.keymap.set('n', '<C-Right>', 'gt', { silent = true, noremap = true, desc = 'Next Tab' })
 
 vim.keymap.set('n', 'cp', require('custom.util').copy_active_buffer_path, { silent = true, noremap = true, desc = '[C]opy [P]ath of active buffer' })
-vim.keymap.set('n', '<leader>cp', function()
-  require('custom.util').copy_active_buffer_path '+'
-end, { silent = true, noremap = true, desc = '[C]opy [P]ath of active buffer' })
+vim.keymap.set(
+  'n',
+  '<leader>cp',
+  function() require('custom.util').copy_active_buffer_path '+' end,
+  { silent = true, noremap = true, desc = '[C]opy [P]ath of active buffer' }
+)
 
 vim.keymap.set(
   'n',
@@ -48,6 +47,9 @@ vim.keymap.set(
   require('custom.util').copy_active_buffer_abs_path,
   { silent = true, noremap = true, desc = '[C]opy Absolute [P]ath of active buffer' }
 )
-vim.keymap.set('n', '<leader>cP', function()
-  require('custom.util').copy_active_buffer_abs_path '+'
-end, { silent = true, noremap = true, desc = '[C]opy Absolute [P]ath of active buffer' })
+vim.keymap.set(
+  'n',
+  '<leader>cP',
+  function() require('custom.util').copy_active_buffer_abs_path '+' end,
+  { silent = true, noremap = true, desc = '[C]opy Absolute [P]ath of active buffer' }
+)

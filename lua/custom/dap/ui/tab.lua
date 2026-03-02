@@ -31,12 +31,8 @@ end
 local function close_tab(opts)
   dapui.close(opts)
 
-  if ui_data.came_from_tab and vim.api.nvim_tabpage_is_valid(ui_data.came_from_tab) then
-    vim.api.nvim_set_current_tabpage(ui_data.came_from_tab)
-  end
-  if ui_data.tab and vim.api.nvim_tabpage_is_valid(ui_data.tab) then
-    vim.cmd { cmd = 'tabclose', args = { vim.api.nvim_tabpage_get_number(ui_data.tab) } }
-  end
+  if ui_data.came_from_tab and vim.api.nvim_tabpage_is_valid(ui_data.came_from_tab) then vim.api.nvim_set_current_tabpage(ui_data.came_from_tab) end
+  if ui_data.tab and vim.api.nvim_tabpage_is_valid(ui_data.tab) then vim.cmd { cmd = 'tabclose', args = { vim.api.nvim_tabpage_get_number(ui_data.tab) } } end
 
   ui_data.win = nil
   ui_data.tab = nil

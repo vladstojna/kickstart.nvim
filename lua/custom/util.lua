@@ -1,12 +1,8 @@
 local M = {}
 
-local function string_contains_prefix(str, prefix)
-  return string.sub(str, 0, #prefix) == prefix
-end
+local function string_contains_prefix(str, prefix) return string.sub(str, 0, #prefix) == prefix end
 
-M.string_remove_prefix = function(str, prefix)
-  return string_contains_prefix(str, prefix) and string.sub(str, #prefix + 1) or str
-end
+M.string_remove_prefix = function(str, prefix) return string_contains_prefix(str, prefix) and string.sub(str, #prefix + 1) or str end
 
 M.copy_active_buffer_path = function(register)
   local current_file = M.string_remove_prefix(vim.fn.getreg '%', vim.fn.getcwd() .. '/')
@@ -18,9 +14,7 @@ end
 M.copy_active_buffer_abs_path = function(register)
   local abs_path = vim.fn.getreg '%'
 
-  if string_contains_prefix(abs_path, '/') == false then
-    abs_path = vim.fn.getcwd() .. '/' .. vim.fn.getreg '%'
-  end
+  if string_contains_prefix(abs_path, '/') == false then abs_path = vim.fn.getcwd() .. '/' .. vim.fn.getreg '%' end
 
   vim.fn.setreg(register ~= nil and register or '', abs_path)
   vim.notify('Copied ' .. abs_path, vim.log.levels.INFO)
@@ -43,19 +37,13 @@ M.jumplist2table = function()
   return result
 end
 
-M.replace_loclist_with_jumplist = function()
-  vim.fn.setloclist(0, M.jumplist2table(), 'r')
-end
+M.replace_loclist_with_jumplist = function() vim.fn.setloclist(0, M.jumplist2table(), 'r') end
 
 M.is_test_file = function(path)
   local has_override, override = pcall(require, 'custom.util-override')
-  if not has_override then
-    return false
-  end
+  if not has_override then return false end
   local has_test_file_check, is_test_file = pcall(override.is_test_file, path)
-  if not has_test_file_check then
-    return false
-  end
+  if not has_test_file_check then return false end
   return is_test_file
 end
 

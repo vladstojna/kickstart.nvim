@@ -42,9 +42,7 @@ M.load_breakpoints = function()
   end
 end
 
-M._clear_breakpoints = function()
-  vim.g.Breakpoints = nil
-end
+M._clear_breakpoints = function() vim.g.Breakpoints = nil end
 
 --- Toggle a breakpoint and ensure it is persisted in the session
 M.toggle_breakpoint = function()

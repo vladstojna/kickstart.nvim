@@ -85,37 +85,27 @@ return {
   keys = {
     {
       '<leader>xw',
-      function()
-        require('trouble').toggle { mode = 'diagnostics' }
-      end,
+      function() require('trouble').toggle { mode = 'diagnostics' } end,
       desc = 'Trouble: workspace diagnostics',
     },
     {
       '<leader>xd',
-      function()
-        require('trouble').toggle { mode = 'diagnostics', filter = { buf = 0 } }
-      end,
+      function() require('trouble').toggle { mode = 'diagnostics', filter = { buf = 0 } } end,
       desc = 'Trouble: buffer diagnostics',
     },
     {
       '<leader>xL',
-      function()
-        require('trouble').toggle { mode = 'lsp' }
-      end,
+      function() require('trouble').toggle { mode = 'lsp' } end,
       desc = 'Trouble: LSP',
     },
     {
       '<leader>xl',
-      function()
-        require('trouble').toggle { mode = 'loclist', focus = true }
-      end,
+      function() require('trouble').toggle { mode = 'loclist', focus = true } end,
       desc = 'Trouble: loclist',
     },
     {
       '<leader>xx',
-      function()
-        require('trouble').toggle { mode = 'qflist', focus = true }
-      end,
+      function() require('trouble').toggle { mode = 'qflist', focus = true } end,
       desc = 'Trouble: qflist',
     },
     {

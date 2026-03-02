@@ -4,9 +4,7 @@ local last_config = nil
 local M = {}
 
 ---@param session dap.Session
-M.save_config = function(session)
-  last_config = session.config
-end
+M.save_config = function(session) last_config = session.config end
 
 --- Re-run last session after expanding and enriching
 M.run_last = function()

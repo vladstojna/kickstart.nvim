@@ -14,9 +14,7 @@ return {
   keys = {
     {
       '\\',
-      function()
-        require('neo-tree.command').execute { position = 'current' }
-      end,
+      function() require('neo-tree.command').execute { position = 'current' } end,
       desc = 'Open NeoTree',
     },
   },
@@ -26,9 +24,7 @@ return {
     event_handlers = {
       {
         event = 'neo_tree_buffer_enter',
-        handler = function(_)
-          vim.cmd [[ setlocal relativenumber ]]
-        end,
+        handler = function(_) vim.cmd [[ setlocal relativenumber ]] end,
       },
     },
     filesystem = {

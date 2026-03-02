@@ -12,22 +12,16 @@ end
 ---@param key string
 ---@param func function
 ---@param desc string
-local function map(key, func, desc)
-  vim.keymap.set('n', key, func, { desc = desc })
-end
+local function map(key, func, desc) vim.keymap.set('n', key, func, { desc = desc }) end
 
 local prev_frame = {
   desc = 'Debug: go to previous frame',
-  func = function()
-    run_if_session_active(require('dap').up)
-  end,
+  func = function() run_if_session_active(require('dap').up) end,
 }
 
 local next_frame = {
   desc = 'Debug: go to next frame',
-  func = function()
-    run_if_session_active(require('dap').down)
-  end,
+  func = function() run_if_session_active(require('dap').down) end,
 }
 
 local M = {}

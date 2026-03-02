@@ -27,7 +27,7 @@ return {
   dependencies = {
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
-    'theHamsta/nvim-dap-virtual-text',
+    { 'theHamsta/nvim-dap-virtual-text', opts = {} },
     'nvim-telescope/telescope-dap.nvim',
 
     -- Required dependency for nvim-dap-ui

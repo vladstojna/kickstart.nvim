@@ -30,6 +30,61 @@ return {
     { 'theHamsta/nvim-dap-virtual-text', opts = {} },
     'nvim-telescope/telescope-dap.nvim',
 
+    {
+      url = 'https://codeberg.org/Jorenar/nvim-dap-disasm.git',
+      config = true,
+      dependencies = {
+        'igorlfs/nvim-dap-view',
+        ---@module 'dap-view'
+        ---@type dapview.Config
+        opts = {
+          winbar = {
+            sections = { 'scopes', 'threads', 'watches', 'breakpoints', 'exceptions', 'repl', 'disassembly' },
+            default_section = 'scopes',
+          },
+          windows = {
+            -- `prev` is the last used position, might be nil
+            position = function(prev)
+              local wins = vim.api.nvim_tabpage_list_wins(0)
+
+              -- Restores previous position if terminal is visible
+              if vim.iter(wins):find(function(win) return vim.w[win].dapview_win_term end) then return prev end
+
+              local count = vim.tbl_count(vim
+                .iter(wins)
+                :filter(function(win)
+                  local buf = vim.api.nvim_win_get_buf(win)
+                  local valid_buftype = vim.tbl_contains({ '', 'help', 'prompt', 'quickfix', 'terminal' }, vim.bo[buf].buftype)
+                  local dapview_win = vim.w[win].dapview_win or vim.w[win].dapview_win_term
+                  return valid_buftype and not dapview_win
+                end)
+                :totable())
+
+              return (count > 1 or vim.o.columns < require('custom.layout').telescope.fullscreen.min_width) and 'below' or 'left'
+            end,
+            size = function(pos) return pos == 'below' and 0.33 or 0.5 end,
+            terminal = {
+              -- `pos` is the position for the regular window
+              position = function(pos) return pos == 'below' and 'right' or 'above' end,
+              size = 0.25,
+            },
+          },
+        },
+        config = function(_, opts)
+          require('dap-view').setup(opts)
+
+          vim.api.nvim_create_autocmd({ 'FileType' }, {
+            pattern = { 'dap-view', 'dap-repl', 'dap-disassembly' }, -- dap-repl is set by `nvim-dap`
+            callback = function(args)
+              vim.wo.relativenumber = true
+              vim.keymap.set('n', '<Right>', function() require('dap-view').navigate { count = vim.v.count1, wrap = true } end, { buffer = args.buf })
+              vim.keymap.set('n', '<Left>', function() require('dap-view').navigate { count = -vim.v.count1, wrap = true } end, { buffer = args.buf })
+            end,
+          })
+        end,
+      },
+    },
+
     -- Required dependency for nvim-dap-ui
     'nvim-neotest/nvim-nio',
 

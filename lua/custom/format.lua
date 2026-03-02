@@ -13,7 +13,7 @@ for _, lang in ipairs { 'typescript', 'javascript', 'json', 'markdown', 'yaml' }
   M.formatters[lang] = { 'prettierd', 'prettier' }
 end
 
-M.autoformat_enabled = true
+M.autoformat_enabled = false
 
 M.create_autoformat_toggle_command = function()
   vim.api.nvim_create_user_command('FormatOnSaveToggle', function(_)

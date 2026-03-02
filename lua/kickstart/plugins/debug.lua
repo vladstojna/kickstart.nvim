@@ -25,8 +25,6 @@ return {
   'mfussenegger/nvim-dap',
   -- NOTE: And you can specify dependencies as well
   dependencies = {
-    -- Creates a beautiful debugger UI
-    'rcarriga/nvim-dap-ui',
     { 'theHamsta/nvim-dap-virtual-text', opts = {} },
     'nvim-telescope/telescope-dap.nvim',
 
@@ -85,9 +83,6 @@ return {
       },
     },
 
-    -- Required dependency for nvim-dap-ui
-    'nvim-neotest/nvim-nio',
-
     -- Installs the debug adapters for you
     'mason-org/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
@@ -124,15 +119,11 @@ return {
     { '<F4>', function() require('dap').run_to_cursor() end, desc = 'Debug: Continue to cursor position' },
     { '<F6>', function() require('dap').terminate() end, desc = 'Debug: Terminate session.' },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    { '<F7>', function() require('custom.dap.ui.tab').toggle { reset = true } end, desc = 'Debug: See last session result.' },
+    { '<F7>', function() require('custom.dap.ui.tab').toggle() end, desc = 'Debug: See last session result.' },
     { '<F8>', function() require('custom.dap.run_last').run_last() end, desc = 'Debug: Run last session' },
-    { '<leader>Dc', function() require('dapui').float_element('console', { enter = false }) end, desc = 'Debug: Show console' },
-    { '<leader>Db', function() require('dapui').float_element('breakpoints', { enter = true }) end, desc = 'Debug: Show breakpoints' },
-    { '<leader>Dw', function() require('dapui').float_element('watches', { enter = true }) end, desc = 'Debug: Show watches' },
   },
   config = function()
     local dap = require 'dap'
-    local dapui = require 'dapui'
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -177,10 +168,6 @@ return {
       function() telescope.extensions.dap.frames { preview = { hide_on_startup = false } } end,
       { desc = 'Debug: [S]earch [F]rames' }
     )
-
-    -- Dap UI setup
-    -- For more information, see |:help nvim-dap-ui|
-    dapui.setup(vim.tbl_extend('error', { mappings = { expand = { 'z', '<Tab>' } } }, require 'custom.dap.ui.layout'))
 
     -- Change breakpoint icons
     vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })

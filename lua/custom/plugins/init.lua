@@ -15,6 +15,10 @@ return {
   'lambdalisue/suda.vim',
   'stevearc/dressing.nvim',
   {
+    'mks-h/treesitter-autoinstall.nvim',
+    config = function() require('treesitter-autoinstall').setup() end,
+  },
+  {
     'sindrets/diffview.nvim',
     opts = {
       hooks = {

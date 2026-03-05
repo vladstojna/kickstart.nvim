@@ -119,7 +119,11 @@ return {
     { '<F4>', function() require('dap').run_to_cursor() end, desc = 'Debug: Continue to cursor position' },
     { '<F6>', function() require('dap').terminate() end, desc = 'Debug: Terminate session.' },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    { '<F7>', function() require('custom.dap.ui.tab').toggle() end, desc = 'Debug: See last session result.' },
+    {
+      '<F7>',
+      function() require('custom.dap.ui.tab').toggle(true) end,
+      desc = 'Debug: Toggle UI.',
+    },
     { '<F8>', function() require('custom.dap.run_last').run_last() end, desc = 'Debug: Run last session' },
   },
   config = function()
@@ -194,7 +198,7 @@ return {
     dap.listeners.after.event_initialized['store_config'] = require('custom.dap.run_last').save_config
     dap.listeners.after.event_initialized['custom_dap_util'] = require('custom.dap.util').set_keymaps
 
-    set_termination_events('dapui_config', require('custom.dap.ui.tab').close)
+    set_termination_events('dapui_config', function() require('custom.dap.ui.tab').close(false) end)
 
     -- Install golang specific config
     require('dap-go').setup {

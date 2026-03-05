@@ -6,11 +6,35 @@ local ui_data = {
   came_from_tab = nil,
 }
 
+---@param should_close? function|boolean
+local function normalize_predicate(should_close)
+  ---@param tab integer
+  ---@return boolean only_original_window_in_tab window found is the window originally opened
+  local function only_original_window_left(tab)
+    if not tab then return false end
+    local windows = vim.api.nvim_tabpage_list_wins(tab)
+
+    for _, win in ipairs(windows) do
+      if win ~= ui_data.win then return false end
+    end
+    return true
+  end
+
+  if type(should_close) == 'function' then
+    return should_close
+  elseif type(should_close) == 'boolean' then
+    return function() return should_close end
+  else
+    return only_original_window_left
+  end
+end
+
 --- Open DAP UI in new tab
 ---@param opts? any
 local function open_in_tab(opts)
   if ui_data.win and vim.api.nvim_win_is_valid(ui_data.win) then
     vim.api.nvim_set_current_win(ui_data.win)
+    dap_ui.open(opts)
     return
   end
 
@@ -28,22 +52,31 @@ end
 
 --- Close DAP UI tab
 ---@param opts? any
-local function close_tab(opts)
+---@param should_close? function|boolean
+local function close_tab(opts, should_close)
+  should_close = normalize_predicate(should_close)
+
   dap_ui.close(opts)
 
-  if ui_data.came_from_tab and vim.api.nvim_tabpage_is_valid(ui_data.came_from_tab) then vim.api.nvim_set_current_tabpage(ui_data.came_from_tab) end
-  if ui_data.tab and vim.api.nvim_tabpage_is_valid(ui_data.tab) then vim.cmd { cmd = 'tabclose', args = { vim.api.nvim_tabpage_get_number(ui_data.tab) } } end
+  if should_close(ui_data.tab) then
+    if ui_data.came_from_tab and vim.api.nvim_tabpage_is_valid(ui_data.came_from_tab) then vim.api.nvim_set_current_tabpage(ui_data.came_from_tab) end
 
-  ui_data.win = nil
-  ui_data.tab = nil
-  ui_data.came_from_tab = nil
+    if ui_data.tab and vim.api.nvim_tabpage_is_valid(ui_data.tab) then vim.cmd { cmd = 'tabclose', args = { vim.api.nvim_tabpage_get_number(ui_data.tab) } } end
+
+    ui_data.win = nil
+    ui_data.tab = nil
+    ui_data.came_from_tab = nil
+  end
 end
 
 --- Toggle DAP UI Tab
 ---@param opts? any
-local function toggle_tab(opts)
+---@param should_close? function|boolean
+local function toggle_tab(opts, should_close)
+  should_close = normalize_predicate(should_close)
+
   if ui_data.tab and vim.api.nvim_get_current_tabpage() == ui_data.tab then
-    close_tab(opts)
+    close_tab(opts, should_close)
   else
     open_in_tab(opts)
   end

@@ -23,3 +23,12 @@ vim.api.nvim_create_autocmd('CmdlineLeave', {
   group = cmdGrp,
   callback = function() set_cmdheight(0) end,
 })
+
+vim.api.nvim_create_autocmd('DiagnosticChanged', {
+  group = vim.api.nvim_create_augroup('UpdateLocListOnDiagnostics', { clear = true }),
+  callback = function(_)
+    vim.diagnostic.setloclist {
+      open = false,
+    }
+  end,
+})

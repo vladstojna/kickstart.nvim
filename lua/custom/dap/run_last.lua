@@ -16,4 +16,8 @@ M.run_last = function()
   end
 end
 
+M.get_config = function() return last_config end
+
+M.set_config = function(cfg) last_config = cfg end
+
 return M

@@ -72,6 +72,10 @@ return {
             --- Close DAP UI tab before saving session so that the tab isn't
             --- persisted in the session file
             if package.loaded['dap'] and package.loaded['dap-view'] then require('custom.dap.ui.tab').close(true) end
+            if package.loaded['dap'] then
+              local cfg = require('custom.dap.run_last').get_config()
+              if cfg ~= nil then vim.g.DapSessionConfig = vim.json.encode(cfg) end
+            end
           end,
         },
       }

@@ -6,6 +6,13 @@ vim.api.nvim_create_autocmd('SessionLoadPost', {
   end,
 })
 
+vim.api.nvim_create_autocmd('SessionLoadPost', {
+  desc = 'Load saved DAP session config after session is loaded',
+  callback = function()
+    if vim.g.DapSessionConfig ~= nil then require('custom.dap.run_last').set_config(vim.json.decode(vim.g.DapSessionConfig)) end
+  end,
+})
+
 local cmdGrp = vim.api.nvim_create_augroup('cmdline_height', { clear = true })
 local function set_cmdheight(val)
   if vim.opt.cmdheight:get() ~= val then

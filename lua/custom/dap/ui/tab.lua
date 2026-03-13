@@ -8,24 +8,12 @@ local ui_data = {
 
 ---@param should_close? function|boolean
 local function normalize_predicate(should_close)
-  ---@param tab integer
-  ---@return boolean only_original_window_in_tab window found is the window originally opened
-  local function only_original_window_left(tab)
-    if not tab then return false end
-    local windows = vim.api.nvim_tabpage_list_wins(tab)
-
-    for _, win in ipairs(windows) do
-      if win ~= ui_data.win then return false end
-    end
-    return true
-  end
-
   if type(should_close) == 'function' then
     return should_close
   elseif type(should_close) == 'boolean' then
-    return function() return should_close end
+    return function(_) return should_close end
   else
-    return only_original_window_left
+    return function(_) return true end
   end
 end
 

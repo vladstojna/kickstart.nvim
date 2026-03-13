@@ -33,6 +33,7 @@ return {
       config = true,
       dependencies = {
         'igorlfs/nvim-dap-view',
+        version = 'v1.0.0',
         ---@module 'dap-view'
         ---@type dapview.Config
         opts = {
@@ -75,6 +76,7 @@ return {
             pattern = { 'dap-view', 'dap-repl', 'dap-disassembly' }, -- dap-repl is set by `nvim-dap`
             callback = function(args)
               vim.wo.relativenumber = true
+              vim.keymap.set('n', '<Tab>', '<CR>', { silent = true, remap = true, buffer = args.buf })
               vim.keymap.set('n', '<Right>', function() require('dap-view').navigate { count = vim.v.count1, wrap = true } end, { buffer = args.buf })
               vim.keymap.set('n', '<Left>', function() require('dap-view').navigate { count = -vim.v.count1, wrap = true } end, { buffer = args.buf })
             end,
@@ -198,7 +200,7 @@ return {
     dap.listeners.after.event_initialized['store_config'] = require('custom.dap.run_last').save_config
     dap.listeners.after.event_initialized['custom_dap_util'] = require('custom.dap.util').set_keymaps
 
-    set_termination_events('dapui_config', function() require('custom.dap.ui.tab').close(false) end)
+    set_termination_events('dapui_config', function() require('custom.dap.ui.tab').close(false, false) end)
 
     -- Install golang specific config
     require('dap-go').setup {

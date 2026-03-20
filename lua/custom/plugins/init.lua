@@ -205,32 +205,6 @@ return {
     end,
   },
   {
-    'laytan/cloak.nvim',
-    version = '*',
-    config = function()
-      require('cloak').setup {
-        enabled = true,
-        cloak_character = '*',
-        -- The applied highlight group (colors) on the cloaking, see `:h highlight`.
-        highlight_group = 'Comment',
-        -- Applies the length of the replacement characters for all matched
-        -- patterns, defaults to the length of the matched pattern.
-        cloak_length = nil, -- Provide a number if you want to hide the true length of the value.
-        patterns = {
-          {
-            -- Match any file starting with '.env'.
-            -- This can be a table to match multiple file patterns.
-            file_pattern = '.env*',
-            -- Match an equals sign and any character after it.
-            -- This can also be a table of patterns to cloak,
-            -- example: cloak_pattern = { ':.+', '-.+' } for yaml files.
-            cloak_pattern = '=.+',
-          },
-        },
-      }
-    end,
-  },
-  {
     'lervag/vimtex',
     ft = 'tex',
     config = function()
@@ -299,31 +273,6 @@ return {
         desc = 'Toggle centered view',
       },
     },
-  },
-  {
-    'Badhi/nvim-treesitter-cpp-tools',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    ft = 'cpp',
-    config = function()
-      require('nt-cpp-tools').setup {
-        preview = {
-          quit = 'q',
-          accept = '<tab>',
-        },
-        header_extension = 'hpp',
-        source_extension = 'cpp',
-        custom_define_class_function_commands = {
-          TSCppImplWrite = {
-            output_handle = require('nt-cpp-tools.output_handlers').get_add_to_cpp(),
-          },
-        },
-      }
-      vim.keymap.set('n', '<leader>lgi', vim.cmd.TSCppDefineClassFunc, { desc = 'TSCpp: Implement out-of-class member functions' })
-      vim.keymap.set('n', '<leader>lgc', vim.cmd.TSCppMakeConcreteClass, { desc = 'TSCpp: Create a concrete class' })
-      vim.keymap.set('n', '<leader>lgd', vim.cmd.TSCppImplWrite, { desc = 'TSCpp: Add definition to cpp file' })
-      vim.keymap.set('n', '<leader>lgt', vim.cmd.TSCppRuleOf3, { desc = 'TSCpp: Implement rule-of-3' })
-      vim.keymap.set('n', '<leader>lgf', vim.cmd.TSCppRuleOf5, { desc = 'TSCpp: Implement rule-of-5' })
-    end,
   },
   {
     'p00f/clangd_extensions.nvim',

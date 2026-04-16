@@ -293,37 +293,21 @@ return {
     end,
   },
   {
-    'jmacadie/telescope-hierarchy.nvim',
-    dependencies = {
-      {
-        'nvim-telescope/telescope.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' },
-      },
-    },
+    'retran/meow.yarn.nvim',
+    dependencies = { 'MunifTanjim/nui.nvim' },
     keys = {
-      {
-        'ghi',
-        '<cmd>Telescope hierarchy incoming_calls<cr>',
-        desc = 'LSP: Call hierarchy (incoming)',
-      },
-      {
-        'gho',
-        '<cmd>Telescope hierarchy outgoing_calls<cr>',
-        desc = 'LSP: Call hierarchy (outgoing)',
-      },
+      { 'ghT', function() require('meow.yarn').open_tree('type_hierarchy', 'supertypes') end, desc = 'LSP: Type Hierarchy (Super)' },
+      { 'ght', function() require('meow.yarn').open_tree('type_hierarchy', 'subtypes') end, desc = 'LSP: Type Hierarchy (Super)' },
+      { 'ghi', function() require('meow.yarn').open_tree('call_hierarchy', 'callers') end, desc = 'LSP: Caller Hierarchy' },
+      { 'gho', function() require('meow.yarn').open_tree('call_hierarchy', 'callees') end, desc = 'LSP: Callee Hierarchy' },
     },
-    opts = {
-      extensions = {
-        hierarchy = {
-          initial_multi_expand = true,
-          multi_depth = 5,
-          layout_strategy = 'horizontal',
+    config = function()
+      require('meow.yarn').setup {
+        window = {
+          preview_height_ratio = 0.50,
         },
-      },
-    },
-    config = function(_, opts)
-      require('telescope').setup(opts)
-      require('telescope').load_extension 'hierarchy'
+        preview_context_lines = vim.o.lines,
+      }
     end,
   },
   {

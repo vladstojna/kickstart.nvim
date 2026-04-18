@@ -99,7 +99,20 @@ return {
   },
   {
     'MagicDuck/grug-far.nvim',
-    config = function() require('grug-far').setup {} end,
+    config = function()
+      require('grug-far').setup {
+        startInInsertMode = false,
+      }
+
+      vim.keymap.set({ 'x' }, '<leader>/', function() require('grug-far').open { visualSelectionUsage = 'auto-detect' } end, { desc = 'grug-far: Open' })
+      vim.keymap.set({ 'n' }, '<leader>//', function() require('grug-far').open() end, { desc = 'grug-far: Open' })
+      vim.keymap.set(
+        { 'n' },
+        '<leader>/w',
+        function() require('grug-far').open { prefills = { search = vim.fn.expand '<cword>', flags = '--fixed-strings' } } end,
+        { desc = 'grug-far: Search word under cursor' }
+      )
+    end,
   },
   {
     'rcarriga/nvim-notify',

@@ -98,14 +98,8 @@ return {
     config = function() vim.g.startuptime_tries = 10 end,
   },
   {
-    'windwp/nvim-spectre',
-    keys = {
-      {
-        '<leader>sR',
-        function() require('spectre').open() end,
-        desc = '[R]eplace in files (Spectre)',
-      },
-    },
+    'MagicDuck/grug-far.nvim',
+    config = function() require('grug-far').setup {} end,
   },
   {
     'rcarriga/nvim-notify',
